@@ -2,6 +2,7 @@ package project1.dateMoneyManagement.controller.login;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,19 +22,27 @@ public class LoginController {
     }
 
     @GetMapping
-    public String loginForm() {
+    public String loginForm(Model model) {
         log.info("logForm");
+
         return "login/loginForm";
     }
 
     @PostMapping
     public String login(@RequestParam String userId,
-                        @RequestParam String pw) {
-
+                        @RequestParam String pw,
+                        Model model) {
         Member findMember = memberRepository.findById(userId);
-        log.info("process login!\n" + String.valueOf(findMember));
-        if (findMember != null) return "homepage";
-        else return "login/loginForm";
+
+        log.info("process login!");
+
+        if (findMember != null && findMember.getPassword().equals(pw))
+            return "homepage";
+
+        else {
+            model.addAttribute("logFailed", true);
+            return "login/loginForm";
+        }
     }
 
     @GetMapping("/findid")
