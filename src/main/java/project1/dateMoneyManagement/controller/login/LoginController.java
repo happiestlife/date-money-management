@@ -3,46 +3,59 @@ package project1.dateMoneyManagement.controller.login;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import project1.dateMoneyManagement.Member;
-import project1.dateMoneyManagement.repository.member.MemberRepository;
+import project1.dateMoneyManagement.service.LoginService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Slf4j
 @Controller
 @RequestMapping("/login")
 public class LoginController {
 
-    private MemberRepository memberRepository;
+    private LoginService loginService;
 
-    public LoginController(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
+    public LoginController(LoginService loginService) {
+        this.loginService = loginService;
     }
 
     @GetMapping
     public String loginForm(Model model) {
-        log.info("logForm");
-
         return "login/loginForm";
     }
 
     @PostMapping
     public String login(@RequestParam String userId,
                         @RequestParam String pw,
-                        Model model) {
-        Member findMember = memberRepository.findById(userId);
+                        HttpServletRequest request) {
+        /**
+         * 로그인 실패 시 LoginExceptionController를 통해서 다시 로그인 창으로 이동할 때,
+         * id 입력 창을 유지 시켜주기 위한 userId를 세션에 입력
+         */
+        HttpSession session = request.getSession();
+        session.setAttribute("userId", userId);
 
-        log.info("process login!");
+        Member loginMember = loginService.login(userId, pw);
+        // 로그인 성공시 아래로 코드 진행, 익셉션(WrongIdOrPassword) 발생 시 LoginExceptionController에서 에러 처리 메서드 실행
 
-        if (findMember != null && findMember.getPassword().equals(pw))
-            return "homepage";
+        session.removeAttribute("userId");
+        session.setAttribute("member", loginMember);
 
-        else {
-            model.addAttribute("logFailed", true);
-            return "login/loginForm";
-        }
+        return "redirect:/";
+    }
+
+    @GetMapping("/register")
+    public String registerForm() {
+        return "login/register";
+    }
+
+    @PostMapping("/register")
+    public String register(@ModelAttribute Member member) {
+        loginService.register(member);
+
+        return "login/loginForm";
     }
 
     @GetMapping("/findid")

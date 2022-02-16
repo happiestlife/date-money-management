@@ -1,11 +1,14 @@
 package project1.dateMoneyManagement.repository.member;
 
 import org.springframework.stereotype.Repository;
+import org.yaml.snakeyaml.constructor.DuplicateKeyException;
 import project1.dateMoneyManagement.Member;
+import project1.dateMoneyManagement.exception.login.DuplicateIdException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
@@ -18,52 +21,56 @@ public class MemoryMemberRepository implements MemberRepository {
         String memberId = member.getId();
         if (!memoryMemberRepository.containsKey(memberId))
             memoryMemberRepository.put(memberId, member);
+        else
+            throw new DuplicateIdException("해당 아이디는 이미 존재합니다.");
     }
 
     @Override
-    public Member update(String memberId, Member newMember) {
+    public Member update(String memberId, Member updateMember) {
         if (memoryMemberRepository.containsKey(memberId)) {
             Member member = memoryMemberRepository.get(memberId);
 
-            member.setPassword(newMember.getPassword());
-            member.setEmail(newMember.getEmail());
-            member.setNickname(newMember.getNickname());
-            if(newMember.getImage() != null)
-                member.setImage(newMember.getImage());
-            member.setBoyName(newMember.getBoyName());
-            member.setGirlName(newMember.getGirlName());
+            member.setPassword(updateMember.getPassword());
+            member.setEmail(updateMember.getEmail());
+            member.setNickname(updateMember.getNickname());
+            if(updateMember.getImage() != null)
+                member.setImage(updateMember.getImage());
+            member.setBoyName(updateMember.getBoyName());
+            member.setGirlName(updateMember.getGirlName());
+
+            memoryMemberRepository.put(memberId, member);
 
             return member;
         }
         else
-            return null;
+            throw new NoSuchElementException("아이디가 존재하지 않습니다.");
     }
 
     @Override
-    public Member remove(String memberId) {
-        if (!memoryMemberRepository.containsKey(memberId)) {
+    public void remove(String memberId) {
+        if (memoryMemberRepository.containsKey(memberId)) {
             Member member = memoryMemberRepository.get(memberId);
             memoryMemberRepository.remove(memberId);
-
-            return member;
         }
         else
-            return null;
+            throw new NoSuchElementException();
     }
 
     @Override
     public Member findById(String memberId) {
-        if(memoryMemberRepository.containsKey(memberId))
-            return memoryMemberRepository.get(memberId);
-        else
-            return null;
+        return memoryMemberRepository.get(memberId);
     }
 
     @Override
     public List<Member> findAll() {
-        if(memoryMemberRepository.size() != 0)
-            return new ArrayList<Member>(memoryMemberRepository.values());
-        else
-            return null;
+        return new ArrayList<Member>(memoryMemberRepository.values());
+    }
+
+    public int getSize() {
+        return memoryMemberRepository.size();
+    }
+
+    public void clear() {
+        memoryMemberRepository.clear();
     }
 }

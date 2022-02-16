@@ -6,13 +6,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import project1.dateMoneyManagement.Member;
 import project1.dateMoneyManagement.repository.member.MemberRepository;
 
 import javax.annotation.PostConstruct;
-import java.awt.image.BufferedImage;
-import java.util.Date;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 
 @Slf4j
 @Controller
@@ -26,18 +28,12 @@ public class BaseController {
     }
 
     @GetMapping
-    public String gotoLogin(RedirectAttributes redirect) {
-        log.info("goto loginPage");
-
-        redirect.addAttribute("logFailed", false);
-
-        return "redirect:/login";
-    }
-
-    @PostMapping
-    public String login() {
-        log.info("login");
-        return "homepage";
+    public String gotoLogin(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if(session.getAttribute("member") == null)
+            return "redirect:/login";
+        else
+            return "homepage";
     }
 
     @PostConstruct
@@ -45,8 +41,7 @@ public class BaseController {
         memberRepository.insert(new Member("chickenman10", "1234", "chickenman10@naver.com",
                 "chickenman", null, "현성", "보민"));
 
-        memberRepository.insert(new Member("chickenman11", "4567", "aaaa@naver.com",
+        memberRepository.insert(new Member("ruri", "0820", "aaaa@naver.com",
                 "ruri", null, "현성2", "보민2"));
-
     }
 }
