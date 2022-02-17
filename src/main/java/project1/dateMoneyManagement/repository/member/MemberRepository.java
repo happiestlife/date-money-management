@@ -10,4 +10,5 @@ public interface MemberRepository {
     public void remove(String memberId);
     public Member findById(String memberId);
     public List<Member> findAll();
+    public FindLoginInfoParam findByEmail(String email);
 }

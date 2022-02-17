@@ -5,6 +5,7 @@
     <title>로그인</title>
 </head>
 <body>
+    <h1>데이트비 관리 프로그램</h1>
 <div class="py-5 text-center">
     <form action="../homepage.html" th:action method="post">
         <fieldset>
@@ -12,23 +13,26 @@
             <ul>
                 <li>
                     <label for="userId">아이디 </label>
-                    <input type="text" id="userId" name="userId">
+                    <input type="text" id="userId" name="userId" th:value="${userId}">
                 </li>
                 <li>
                     <label for="pw">비밀번호 </label>
                     <input type="password" id="pw" name="pw">
                 </li>
             </ul>
-            <h3 th:if="${logFailed==true}" th:text="'아이디가 존재하지 않거나 비밀번호가 틀립니다.'"></h3>
+            <h3 th:if="${logFailed}" th:text="'아이디가 존재하지 않거나 비밀번호가 틀립니다.'"></h3>
         </fieldset>
         <button onclick="location.href='../homepage.html'"
                 th:onclick="|location.href='@{/login}'|"
                 type="submit">로그인</button>
-        <button onclick="location.href='/find/id/findId.html'"
-                th:onclick="|location.href='@{/login/find/findId}'|"
+        <button onclick="location.href='register.html'"
+                th:onclick="|location.href='@{/login/register}'|"
+                type="button">회원가입</button>
+        <button onclick="location.href='find/id/findid.html'"
+                th:onclick="|location.href='@{/login/findid}'|"
                 type="button">아이디 찾기</button>
-        <button onclick="location.href='find/pw/findPw.html'"
-                th:onclick="|location.href='@{/login/find/findPw}'|"
+        <button onclick="location.href='find/pw/findpw.html'"
+                th:onclick="|location.href='@{/login/findpw}'|"
                 type="button">비밀번호 찾기</button>
     </form>
 </div>

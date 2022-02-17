@@ -6,6 +6,8 @@ import project1.dateMoneyManagement.exception.login.DuplicateIdException;
 import project1.dateMoneyManagement.exception.login.WrongIdOrPassword;
 import project1.dateMoneyManagement.repository.member.MemberRepository;
 
+import java.util.NoSuchElementException;
+
 @Service
 public class LoginServiceImpl implements LoginService{
 
@@ -37,7 +39,7 @@ public class LoginServiceImpl implements LoginService{
     }
 
     @Override
-    public String findIdWithEmail(String email) {
-        return null;
+    public String findIdWithEmail(String email) throws NoSuchElementException {
+        return memberRepository.findByEmail(email).getId();
     }
 }

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>아이디 찾기</title>
+</head>
+<body>
+    <h1>데이트비 관리 프로그램</h1>
+    <h2>아이디 찾기</h2>
+
+    <label>이메일에 해당하는 아이디를 보여준다.</label>
+
+    <hr>
+
+    <div th:text="|${email}의 아이디는 ${id}입니다.|"></div>
+    <button onclick="location.href='../pw/findpw.html'"
+            th:onclick="|location.href='@{/login/findpw}'|"
+            type="button">비밀번호 찾기</button>
+    <button onclick="location.href='../../loginForm.html'"
+            th:onclick="|location.href='@{/login}'|"
+            type="button">돌아가기</button>
+</body>
+</html>

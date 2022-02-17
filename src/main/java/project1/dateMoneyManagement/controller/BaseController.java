@@ -28,12 +28,28 @@ public class BaseController {
     }
 
     @GetMapping
-    public String gotoLogin(HttpServletRequest request) {
+    public String gotoLogin(HttpServletRequest request, Model model) {
+        log.info("login");
+
         HttpSession session = request.getSession();
-        if(session.getAttribute("member") == null)
+        Object member = session.getAttribute("member");
+
+        if(member == null)
             return "redirect:/login";
-        else
+        else {
+            model.addAttribute("member", member);
             return "homepage";
+        }
+    }
+
+    @PostMapping
+    public String logout(HttpServletRequest request) {
+        log.info("logout");
+
+        HttpSession session = request.getSession();
+        session.removeAttribute("member");
+
+        return "redirect:/";
     }
 
     @PostConstruct

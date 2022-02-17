@@ -53,18 +53,35 @@ public class LoginController {
 
     @PostMapping("/register")
     public String register(@ModelAttribute Member member) {
+        log.info("register member\n");
+//        log.info(String.valueOf(member));
+
         loginService.register(member);
 
-        return "login/loginForm";
+        log.info("register success");
+
+        return "redirect:/login";
     }
 
     @GetMapping("/findid")
-    public String findID() {
-        return "login/find/id/findId";
+    public String findIdForm() {
+        return "login/find/id/findid";
+    }
+
+    @PostMapping("/findid")
+    public String findId(@RequestParam String email, Model model) {
+        String id = loginService.findIdWithEmail(email);
+
+        model.addAttribute("email", email);
+        model.addAttribute("id", id);
+
+        log.info(email + ", " + id);
+
+        return "login/find/id/showid";
     }
 
     @GetMapping("/findpw")
-    public String findPw() {
-        return "login/find/pw/findPw";
+    public String findPwForm() {
+        return "login/find/pw/findpw";
     }
 }

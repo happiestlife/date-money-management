@@ -1,7 +1,6 @@
 package project1.dateMoneyManagement.repository.member;
 
 import org.springframework.stereotype.Repository;
-import org.yaml.snakeyaml.constructor.DuplicateKeyException;
 import project1.dateMoneyManagement.Member;
 import project1.dateMoneyManagement.exception.login.DuplicateIdException;
 
@@ -15,13 +14,15 @@ import java.util.concurrent.ConcurrentHashMap;
 public class MemoryMemberRepository implements MemberRepository {
 
     private Map<String, Member> memoryMemberRepository = new ConcurrentHashMap<>();
+    private Map<String, FindLoginInfoParam> emailAndId = new ConcurrentHashMap<>();
 
     @Override
     public void insert(Member member) {
         String memberId = member.getId();
-        if (!memoryMemberRepository.containsKey(memberId))
+        if (!memoryMemberRepository.containsKey(memberId)) {
             memoryMemberRepository.put(memberId, member);
-        else
+            emailAndId.put(member.getEmail(), new FindLoginInfoParam(memberId, member.getPassword()));
+        }else
             throw new DuplicateIdException("해당 아이디는 이미 존재합니다.");
     }
 
@@ -40,6 +41,11 @@ public class MemoryMemberRepository implements MemberRepository {
 
             memoryMemberRepository.put(memberId, member);
 
+            String updateEmail = member.getEmail();
+            FindLoginInfoParam loginInfo = emailAndId.get(updateEmail);
+            emailAndId.remove(updateEmail);
+            emailAndId.put(updateEmail, loginInfo);
+
             return member;
         }
         else
@@ -51,6 +57,7 @@ public class MemoryMemberRepository implements MemberRepository {
         if (memoryMemberRepository.containsKey(memberId)) {
             Member member = memoryMemberRepository.get(memberId);
             memoryMemberRepository.remove(memberId);
+            emailAndId.remove(member.getEmail());
         }
         else
             throw new NoSuchElementException();
@@ -62,10 +69,21 @@ public class MemoryMemberRepository implements MemberRepository {
     }
 
     @Override
+    public FindLoginInfoParam findByEmail(String email) {
+        FindLoginInfoParam findInfo = emailAndId.get(email);
+
+        if(findInfo != null)
+            return findInfo;
+        else
+            throw new NoSuchElementException("해당 아이디는 존재하지 않습니다.");
+    }
+
+    @Override
     public List<Member> findAll() {
         return new ArrayList<Member>(memoryMemberRepository.values());
     }
 
+    // 테스트를 위한 메서드
     public int getSize() {
         return memoryMemberRepository.size();
     }
