@@ -1,21 +1,22 @@
-package project1.dateMoneyManagement.service;
+package project1.dateMoneyManagement.service.login;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import project1.dateMoneyManagement.Member;
 import project1.dateMoneyManagement.exception.login.DuplicateIdException;
+import project1.dateMoneyManagement.exception.login.WrongCodeException;
 import project1.dateMoneyManagement.exception.login.WrongIdOrPassword;
+import project1.dateMoneyManagement.repository.member.FindLoginInfoParam;
 import project1.dateMoneyManagement.repository.member.MemberRepository;
 
 import java.util.NoSuchElementException;
 
 @Service
+@RequiredArgsConstructor
 public class LoginServiceImpl implements LoginService{
 
-    private MemberRepository memberRepository;
-
-    public LoginServiceImpl(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
-    }
+    private final MemberRepository memberRepository;
+    private final AuthMailService authMailService;
 
     // 로그인
     @Override
@@ -42,4 +43,25 @@ public class LoginServiceImpl implements LoginService{
     public String findIdWithEmail(String email) throws NoSuchElementException {
         return memberRepository.findByEmail(email).getId();
     }
+
+    @Override
+    public String findPwWithIdAndEmail(String id, String email) {
+        FindLoginInfoParam findLoginInfo = memberRepository.findByEmail(email);
+        if (findLoginInfo.getId().equals(id)) {
+            String code = authMailService.sendMail(new AuthMailDTO(email,
+                    authMailService.TITLE,
+                    authMailService.MESSAGE,
+                    null), id);
+
+            return code;
+        }else
+            throw new NoSuchElementException("아이디가 존재하지 않거나 아이디에 대한 이메일 정보가 일치하지 않습니다.");
+    }
+
+    @Override
+    public boolean verifyCode(String id, String code) throws WrongCodeException {
+        return authMailService.verifyCode(id, code);
+    }
+
+
 }

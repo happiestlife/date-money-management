@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>코드 인증</title>
+</head>
+<body>
+<h1>데이트비 관리 프로그램</h1>
+<h2>비밀번호 찾기</h2>
+<fieldset>
+    <legend>"이메일로 전송된 코드를 입력하세요."</legend>
+    <form action="newpwForm.html" th:action="@{/login/findpw/verifycode}" method="post">
+
+        <label for="code">코드</label>
+        <input type="text" id="code" name="code">
+
+        <div th:text="${errormsg}"></div>
+
+        <button onclick="location.href='newpwForm.html'"
+                th:onclick="|location.href='@{/login/findpw/verifycode}'|"
+                th:object="${id}"
+                type="submit">확인</button>
+        <button onclick="location.href='../../loginForm.html'"
+                th:onclick="|location.href='@{/login}'|"
+                type="button">돌아가기</button>
+    </form>
+</fieldset>
+</body>
+</html>

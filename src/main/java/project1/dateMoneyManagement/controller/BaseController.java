@@ -55,9 +55,9 @@ public class BaseController {
     @PostConstruct
     public void init() {
         memberRepository.insert(new Member("chickenman10", "1234", "chickenman10@naver.com",
-                "chickenman", null, "현성", "보민"));
+                "chickenman", null, "이", "최"));
 
         memberRepository.insert(new Member("ruri", "0820", "aaaa@naver.com",
-                "ruri", null, "현성2", "보민2"));
+                "ruri", null, "이", "최"));
     }
 }

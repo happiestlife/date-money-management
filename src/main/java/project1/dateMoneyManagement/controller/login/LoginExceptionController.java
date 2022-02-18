@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import project1.dateMoneyManagement.exception.login.DuplicateIdException;
+import project1.dateMoneyManagement.exception.login.WrongCodeException;
 import project1.dateMoneyManagement.exception.login.WrongIdOrPassword;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,5 +47,15 @@ public class LoginExceptionController {
         model.addAttribute("errormsg", errorMsg);
 
         return "login/find/id/findid";
+    }
+
+    @ExceptionHandler(WrongCodeException.class)
+    public String wrongCodeError(WrongCodeException e, Model model) {
+        String errorMsg = e.getMessage();
+        log.info(errorMsg);
+
+        model.addAttribute("errormsg", errorMsg);
+
+        return "login/find/pw/authwithcode";
     }
 }
