@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestParam;
 import project1.dateMoneyManagement.exception.login.DuplicateIdException;
 import project1.dateMoneyManagement.exception.login.WrongCodeException;
 import project1.dateMoneyManagement.exception.login.WrongIdOrPassword;
@@ -20,10 +21,9 @@ public class LoginExceptionController {
     public String loginFailed(WrongIdOrPassword e, Model model, HttpServletRequest request) {
         log.info(e.getMessage());
 
-        HttpSession session = request.getSession();
-        String userId = (String)session.getAttribute("userId");
+        String loginId = request.getParameter("loginId");
 
-        model.addAttribute("userId", userId);
+        model.addAttribute("loginId", loginId);
         model.addAttribute("logFailed", true);
 
         return "login/loginForm";

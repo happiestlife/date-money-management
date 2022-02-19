@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import project1.dateMoneyManagement.Member;
 import project1.dateMoneyManagement.service.login.LoginService;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Slf4j
@@ -27,21 +29,19 @@ public class LoginController {
     }
 
     @PostMapping
-    public String login(@RequestParam String userId,
+    public String login(@RequestParam String loginId,
                         @RequestParam String pw,
-                        HttpServletRequest request) {
-        /**
-         * 로그인 실패 시 LoginExceptionController를 통해서 다시 로그인 창으로 이동할 때,
-         * id 입력 창을 유지 시켜주기 위한 userId를 세션에 입력
-         */
-        HttpSession session = request.getSession();
-        session.setAttribute("userId", userId);
-
-        Member loginMember = loginService.login(userId, pw);
+                        HttpSession session,
+                        HttpServletResponse response) {
+        
+        Member loginMember = loginService.login(loginId, pw);
         // 로그인 성공시 아래로 코드 진행, 익셉션(WrongIdOrPassword) 발생 시 LoginExceptionController에서 에러 처리 메서드 실행
 
-        session.removeAttribute("userId");
-        session.setAttribute("member", loginMember);
+        session.setAttribute(loginId, loginMember);
+
+        Cookie cookie = new Cookie("loginId", loginId);
+        cookie.setMaxAge(60*60*24);
+        response.addCookie(cookie);
 
         return "redirect:/";
     }

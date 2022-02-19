@@ -66,7 +66,7 @@ public class AuthMailService {
         if (code != null && code.equals(inputCode))
             return true;
         else
-            throw new WrongCodeException();
+            return false;
     }
 
     private String makeAuthCode() {

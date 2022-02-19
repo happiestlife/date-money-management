@@ -3,16 +3,15 @@ package project1.dateMoneyManagement.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import project1.dateMoneyManagement.Member;
 import project1.dateMoneyManagement.repository.member.MemberRepository;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
@@ -28,26 +27,32 @@ public class BaseController {
     }
 
     @GetMapping
-    public String gotoLogin(HttpServletRequest request, Model model) {
-        log.info("login");
+    public String homepageForm(@CookieValue(value = "loginId", required = false) Cookie cookie,
+                            HttpSession session,
+                            Model model) {
+        log.info("homepage");
 
-        HttpSession session = request.getSession();
-        Object member = session.getAttribute("member");
-
-        if(member == null)
+        if(cookie == null || session.getAttribute(cookie.getValue()) == null)
             return "redirect:/login";
         else {
-            model.addAttribute("member", member);
+            Member loginMember = (Member) session.getAttribute(cookie.getValue());
+            model.addAttribute("member", loginMember);
+
             return "homepage";
         }
     }
 
     @PostMapping
-    public String logout(HttpServletRequest request) {
+    public String logout(HttpSession session,
+                         @CookieValue(value = "loginId") Cookie cookie,
+                         HttpServletResponse response) {
         log.info("logout");
 
-        HttpSession session = request.getSession();
-        session.removeAttribute("member");
+        session.removeAttribute(cookie.getValue());
+
+        cookie.setValue(null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
 
         return "redirect:/";
     }

@@ -40,6 +40,11 @@ public class LoginServiceImpl implements LoginService{
     }
 
     @Override
+    public Member findMemberById(String id) {
+        return memberRepository.findById(id);
+    }
+
+    @Override
     public String findIdWithEmail(String email) throws NoSuchElementException {
         return memberRepository.findByEmail(email).getId();
     }
@@ -59,8 +64,11 @@ public class LoginServiceImpl implements LoginService{
     }
 
     @Override
-    public boolean verifyCode(String id, String code) throws WrongCodeException {
-        return authMailService.verifyCode(id, code);
+    public boolean verifyCode(String id, String code) {
+        if(authMailService.verifyCode(id, code))
+            return true;
+        else
+            throw new WrongCodeException();
     }
 
 
