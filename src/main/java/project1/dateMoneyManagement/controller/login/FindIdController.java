@@ -3,11 +3,10 @@ package project1.dateMoneyManagement.controller.login;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import project1.dateMoneyManagement.service.login.LoginService;
+
+import java.util.NoSuchElementException;
 
 @Slf4j
 @Controller
@@ -22,18 +21,30 @@ public class FindIdController {
 
     @GetMapping
     public String findIdForm() {
+        log.trace("find Id - insert email Form");
+
         return "login/find/id/findid";
     }
 
     @PostMapping
     public String findId(@RequestParam String email, Model model) {
-        String id = loginService.findIdWithEmail(email);
+        log.trace("find Id - insert email");
+
+        String id = loginService.findIdByEmail(email);
 
         model.addAttribute("email", email);
         model.addAttribute("id", id);
 
-        log.info(email + ", " + id);
-
         return "login/find/id/showid";
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public String noSuchIdError(NoSuchElementException e, Model model) {
+        String errorMsg = e.getMessage();
+        log.info(errorMsg);
+
+        model.addAttribute("errormsg", errorMsg);
+
+        return "login/find/id/findid";
     }
 }

@@ -4,21 +4,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestParam;
 import project1.dateMoneyManagement.exception.login.DuplicateIdException;
-import project1.dateMoneyManagement.exception.login.WrongCodeException;
-import project1.dateMoneyManagement.exception.login.WrongIdOrPassword;
+import project1.dateMoneyManagement.exception.login.WrongIdOrPasswordException;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.NoSuchElementException;
 
 @Slf4j
 @ControllerAdvice
 public class LoginExceptionController {
 
-    @ExceptionHandler(WrongIdOrPassword.class)
-    public String loginFailed(WrongIdOrPassword e, Model model, HttpServletRequest request) {
+    @ExceptionHandler(WrongIdOrPasswordException.class)
+    public String loginFailed(WrongIdOrPasswordException e, Model model, HttpServletRequest request) {
         log.info(e.getMessage());
 
         String loginId = request.getParameter("loginId");
@@ -37,25 +33,5 @@ public class LoginExceptionController {
         model.addAttribute("errormsg", errorMsg);
 
         return "login/register";
-    }
-
-    @ExceptionHandler(NoSuchElementException.class)
-    public String noSuchIdError(NoSuchElementException e, Model model) {
-        String errorMsg = e.getMessage();
-        log.info(errorMsg);
-
-        model.addAttribute("errormsg", errorMsg);
-
-        return "login/find/id/findid";
-    }
-
-    @ExceptionHandler(WrongCodeException.class)
-    public String wrongCodeError(WrongCodeException e, Model model) {
-        String errorMsg = e.getMessage();
-        log.info(errorMsg);
-
-        model.addAttribute("errormsg", errorMsg);
-
-        return "login/find/pw/authwithcode";
     }
 }

@@ -1,7 +1,6 @@
 package project1.dateMoneyManagement.service.login;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 

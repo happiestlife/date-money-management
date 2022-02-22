@@ -4,13 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import project1.dateMoneyManagement.Member;
 import project1.dateMoneyManagement.repository.member.MemberRepository;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -30,11 +28,13 @@ public class BaseController {
     public String homepageForm(@CookieValue(value = "loginId", required = false) Cookie cookie,
                             HttpSession session,
                             Model model) {
-        log.info("homepage");
+        if(cookie == null || session.getAttribute(cookie.getValue()) == null) {
+            log.trace("goto LoginPage");
 
-        if(cookie == null || session.getAttribute(cookie.getValue()) == null)
             return "redirect:/login";
-        else {
+        }else {
+            log.trace("goto Homepage");
+
             Member loginMember = (Member) session.getAttribute(cookie.getValue());
             model.addAttribute("member", loginMember);
 
@@ -46,7 +46,7 @@ public class BaseController {
     public String logout(HttpSession session,
                          @CookieValue(value = "loginId") Cookie cookie,
                          HttpServletResponse response) {
-        log.info("logout");
+        log.trace("logout");
 
         session.removeAttribute(cookie.getValue());
 

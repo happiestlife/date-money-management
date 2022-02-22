@@ -1,10 +1,32 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+    <h1>데이트비 관리 프로그램</h1>
+    <h2>비밀번호 찾기</h2>
+    <fieldset>
+        <legend>"새로운 비밀번호를 저장합니다."</legend>
+        <form action="../loginForm.html" th:action="@{/login/findpw/newpw}" method="post">
 
+            <label for="pw">비밀번호 </label>
+            <input type="password" id="pw" name="pw">
+
+            <label for="check">비밀번호 확인 </label>
+            <input type="password" id="check" name="check">
+
+            <div th:text="${errormsg}"></div>
+
+            <button onclick="location.href='../../loginForm.html'"
+                    th:onclick="|location.href='@{/login/findpw/newpw}'|"
+                    type="submit">확인</button>
+            <button onclick="location.href='../../loginForm.html'"
+                    th:onclick="|location.href='@{/login}'|"
+                    type="button">돌아가기</button>
+        </form>
+    </fieldset>
 </body>
 </html>

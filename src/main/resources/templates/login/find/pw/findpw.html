@@ -6,27 +6,28 @@
     <title>비밀번호 찾기</title>
 </head>
 <body>
-<h1>데이트비 관리 프로그램</h1>
-<h2>비밀번호 찾기</h2>
-<fieldset>
-    <legend>"비밀번호를 찾기 위해 이메일과 아이디를 입력해주세요."</legend>
-    <form action="authwithcode.html" th:action="@{/login/findpw}" method="post">
+    <h1>데이트비 관리 프로그램</h1>
+    <h2>비밀번호 찾기</h2>
+    <fieldset>
+        <legend>"비밀번호를 찾기 위해 이메일과 아이디를 입력해주세요."</legend>
+        <form action="authwithcode.html" th:action="@{/login/findpw}" method="post">
 
-        <label for="id">아이디</label>
-        <input type="text" id="id" name="id">
+            <label for="id">아이디</label>
+            <input type="text" id="id" name="id">
 
-        <label for="email">이메일</label>
-        <input type="text" id="email" name="email" th:value="email">
+            <label for="email">이메일</label>
+            <input type="text" id="email" name="email" th:value="email">
 
-        <div th:text="${errormsg}"></div>
+            <div th:text="${errormsg}"></div>
 
-        <button onclick="location.href='authwithcode.html'"
-                th:onclick="|location.href='@{/login/findid}'|"
-                type="submit">확인</button>
-        <button onclick="location.href='../../loginForm.html'"
-                th:onclick="|location.href='@{/login}'|"
-                type="button">돌아가기</button>
-    </form>
-</fieldset>
+            <button onclick="location.href='authwithcode.html'"
+                    th:onclick="|location.href='@{/login/findpw/verifycode}'|"
+                    type="submit">확인</button>
+            <button onclick="location.href='../../loginForm.html'"
+                    th:onclick="|location.href='@{/login}'|"
+                    type="button">돌아가기</button>
+        </form>
+    </fieldset>
+
 </body>
 </html>
