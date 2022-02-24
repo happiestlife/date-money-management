@@ -30,6 +30,7 @@ public class MemoryMemberRepository implements MemberRepository {
     public Member update(String memberId, Member updateMember) {
         if (memoryMemberRepository.containsKey(memberId)) {
             Member member = memoryMemberRepository.get(memberId);
+            String email = member.getEmail();
 
             member.setPassword(updateMember.getPassword());
             member.setEmail(updateMember.getEmail());
@@ -41,16 +42,14 @@ public class MemoryMemberRepository implements MemberRepository {
 
             memoryMemberRepository.put(memberId, member);
 
-            String updateEmail = member.getEmail();
-            FindLoginInfoParam loginInfo = emailAndId.get(updateEmail);
-            emailAndId.remove(updateEmail);
-            emailAndId.put(updateEmail, loginInfo);
+            FindLoginInfoParam loginInfo = emailAndId.get(email);
+            emailAndId.remove(email);
+            emailAndId.put(member.getEmail(), loginInfo);
 
             return member;
         }
         else
             return null;
-//            throw new NoSuchElementException("아이디가 존재하지 않습니다.");
     }
 
     @Override
@@ -64,7 +63,6 @@ public class MemoryMemberRepository implements MemberRepository {
         }
         else
             return false;
-//            throw new NoSuchElementException();
     }
 
     @Override

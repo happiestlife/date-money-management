@@ -20,7 +20,7 @@ import java.util.*;
 public class LoginServiceImpl implements LoginService{
 
     private final MemberRepository memberRepository;
-    private final AuthMailService authMailService;
+    private final AuthMailService authMailServiceImpl;
 
     private Map<String, AuthCode> idAndCode = new HashMap<>();
 
@@ -53,7 +53,7 @@ public class LoginServiceImpl implements LoginService{
 
     // 회원가입
     @Override
-    public void register(Member member){
+    public boolean register(Member member){
         if(member.getId() == "" ||
             member.getPassword() == "" ||
             member.getEmail() == "" ||
@@ -67,6 +67,8 @@ public class LoginServiceImpl implements LoginService{
         else if(memberRepository.insert(member) == false) {
             throw new DuplicateIdException("해당 아이디는 이미 존재합니다.");
         }
+        else
+            return true;
     }
 
     @Override
@@ -76,7 +78,7 @@ public class LoginServiceImpl implements LoginService{
         if(findMember == null) {
             log.info("Exception occurred - findMemberById");
 
-            throw new NoEnoughInfoException();
+            throw new NoSuchElementException();
         }
         else return findMember;
     }
@@ -95,7 +97,7 @@ public class LoginServiceImpl implements LoginService{
     }
 
     @Override
-    public String findPwById(String id, String email) {
+    public String sendAuthCode(String id, String email) {
         Member findMember = findMemberById(id);
         if(findMember == null || findMember.getEmail().equals(email) == false) {
             log.info("Exception occurred - findPwById");
@@ -103,9 +105,9 @@ public class LoginServiceImpl implements LoginService{
             throw new NoSuchElementException("아이디가 존재하지 않거나 아이디에 대한 이메일 정보가 일치하지 않습니다.");
         }
         else {
-            String code = authMailService.sendMail(new AuthMailDTO(findMember.getEmail(),
-                    authMailService.TITLE,
-                    authMailService.MESSAGE,
+            String code = authMailServiceImpl.sendMail(new AuthMailDTO(findMember.getEmail(),
+                    authMailServiceImpl.TITLE,
+                    authMailServiceImpl.MESSAGE,
                     null), id);
             idAndCode.put(id, new AuthCode(code));
 
@@ -115,8 +117,8 @@ public class LoginServiceImpl implements LoginService{
 
     @Override
     public boolean verifyCode(String id, String code) {
-        String getCode = idAndCode.get(id).getCode();
-        if (getCode != null && code.equals(getCode))
+        AuthCode authCode = idAndCode.get(id);
+        if (authCode != null && code.equals(authCode.getCode()))
             return true;
         else {
             log.info("Exception occurred - verifyCode");
@@ -126,7 +128,7 @@ public class LoginServiceImpl implements LoginService{
     }
 
     @Override
-    public void updatePw(String id, String newPw, String check) {
+    public boolean updatePw(String id, String newPw, String check) {
         if(newPw.equals(check) == false) {
             log.info("Exception occurred - updatePw");
 
@@ -138,5 +140,7 @@ public class LoginServiceImpl implements LoginService{
         idAndCode.remove(id);
 
         memberRepository.update(id, findMember);
+
+        return true;
     }
 }

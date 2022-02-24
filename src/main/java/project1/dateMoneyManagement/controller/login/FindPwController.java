@@ -36,7 +36,7 @@ public class FindPwController {
                              HttpServletResponse response) {
         log.trace("find password - insert id and email");
 
-        loginService.findPwById(id, email);
+        loginService.sendAuthCode(id, email);
 
         Cookie cookie = new Cookie("id", id);
         cookie.setMaxAge(60 * 10);
