@@ -12,14 +12,14 @@ import java.util.concurrent.ConcurrentHashMap;
 public class MemoryMemberRepository implements MemberRepository {
 
     private Map<String, Member> memoryMemberRepository = new ConcurrentHashMap<>();
-    private Map<String, FindLoginInfoParam> emailAndId = new ConcurrentHashMap<>();
+    private Map<String, FindLoginInfoDTO> emailAndId = new ConcurrentHashMap<>();
 
     @Override
     public boolean insert(Member member) {
         String memberId = member.getId();
         if (!memoryMemberRepository.containsKey(memberId)) {
             memoryMemberRepository.put(memberId, member);
-            emailAndId.put(member.getEmail(), new FindLoginInfoParam(memberId, member.getPassword()));
+            emailAndId.put(member.getEmail(), new FindLoginInfoDTO(memberId, member.getPassword()));
 
             return true;
         }else
@@ -42,7 +42,7 @@ public class MemoryMemberRepository implements MemberRepository {
 
             memoryMemberRepository.put(memberId, member);
 
-            FindLoginInfoParam loginInfo = emailAndId.get(email);
+            FindLoginInfoDTO loginInfo = emailAndId.get(email);
             emailAndId.remove(email);
             emailAndId.put(member.getEmail(), loginInfo);
 
@@ -71,7 +71,7 @@ public class MemoryMemberRepository implements MemberRepository {
     }
 
     @Override
-    public FindLoginInfoParam findByEmail(String email) {
+    public FindLoginInfoDTO findByEmail(String email) {
         return emailAndId.get(email);
     }
 

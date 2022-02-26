@@ -49,8 +49,7 @@ public class Member {
     private String dateConverter() {
         Date now = new Date();
 
-        SimpleDateFormat date = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss a");
-//        SimpleDateFormat time = new SimpleDateFormat("hh:mm:ss a");
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a");
 
         System.out.println(date.format(now));
         return date.format(now);
