@@ -17,9 +17,9 @@ public class MemoryMemberRepositoryTest {
     @BeforeEach
     void insertSample() {
         Member member1 = new Member("chickenman10", "1234", "chickenman10@naver.com",
-                "chickenman", null, "현성", "보민");
+                "chickenman",  "현성", "보민");
         Member member2 = new Member("ruri", "0820", "aaaa@naver.com",
-                "ruri", null, "현성2", "보민2");
+                "ruri", "현성2", "보민2");
 
         memberRepository.insert(member1);
         memberRepository.insert(member2);
@@ -31,7 +31,7 @@ public class MemoryMemberRepositoryTest {
     @Test
     void insertDataWithNoImage() {
         Member member = new Member("test", "1234", "test@naver.com",
-                "test", null, "현성", "보민");
+                "test",  "현성", "보민");
 
         memberRepository.insert(member);
 
@@ -47,7 +47,7 @@ public class MemoryMemberRepositoryTest {
     void updateMember_Success() {
         String id = idList.get(0);
         Member updateMember = new Member(id, "2222", "test@gmail.com",
-                                "test", null,"현성test", "보민test");
+                                "test", "현성test", "보민test");
 
         memberRepository.update(id, updateMember);
 

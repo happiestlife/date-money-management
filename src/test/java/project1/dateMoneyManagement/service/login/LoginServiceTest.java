@@ -11,6 +11,7 @@ import project1.dateMoneyManagement.exception.login.WrongMatchException;
 import project1.dateMoneyManagement.repository.member.MemoryMemberRepository;
 
 import java.util.NoSuchElementException;
+import java.util.Random;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,7 +20,24 @@ public class LoginServiceTest {
 
     private LoginService loginService = new LoginServiceImpl(new MemoryMemberRepository(), new AuthMailServiceTest());
     private Member member = new Member("test", "1234", "test@naver.com",
-                                "test", null, "test", "test");
+                                "test", "test", "test");
+
+    private class AuthMailServiceTest implements AuthMailService{
+
+        public String sendMail(AuthMailDTO authMailDTO, String id) {
+            return makeAuthCode();
+        }
+
+        private String makeAuthCode() {
+            StringBuilder sb = new StringBuilder();
+            Random random = new Random(System.currentTimeMillis());
+            for (int i = 0; i < 5; i++) {
+                sb.append(Integer.toString(random.nextInt(10)));
+            }
+
+            return sb.toString();
+        }
+    }
 
     @BeforeEach
     public void insertData() {
@@ -29,7 +47,7 @@ public class LoginServiceTest {
     @Test
     public void register_Success(){
         Member member = new Member("test1", "1111", "test",
-                "test", null, "test", "test");
+                "test", "test", "test");
 
         loginService.register(member);
 
@@ -41,9 +59,9 @@ public class LoginServiceTest {
     @Test
     public void register_FailBySameId(){
         Member member1 = new Member("test1", "1", "test1",
-                "test1", null, "test1", "test1");
+                "test1", "test1", "test1");
         Member member2 = new Member("test1", "2222", "test2",
-                "test2", null, "test2", "test2");
+                "test2",  "test2", "test2");
 
         loginService.register(member1);
 
@@ -53,17 +71,17 @@ public class LoginServiceTest {
     @Test
     public void register_FailByNotEnoughData(){
         Member noId = new Member("", "1", "test",
-                "test", null, "test", "test");
+                "test",  "test", "test");
         Member noPw = new Member("test1", "", "test",
-                "test", null, "test", "test");
+                "test", "test", "test");
         Member noEmail = new Member("test2", "1", "",
-                "test", null, "test", "test");
+                "test",  "test", "test");
         Member noNickname = new Member("test3", "1", "test",
-                "", null, "test", "test");
+                "",  "test", "test");
         Member noBoyName= new Member("test4", "1", "test",
-                "test", null, "", "test");
+                "test", "", "test");
         Member noGirlName = new Member("test5", "1", "test",
-                "test", null, "test", "");
+                "test",  "test", "");
 
         assertThrows(NoEnoughInfoException.class, () -> loginService.register(noId));
         assertThrows(NoEnoughInfoException.class, () -> loginService.register(noPw));

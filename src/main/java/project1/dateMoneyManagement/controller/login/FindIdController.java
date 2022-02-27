@@ -41,7 +41,7 @@ public class FindIdController {
     @ExceptionHandler(NoSuchElementException.class)
     public String noSuchIdError(NoSuchElementException e, Model model) {
         String errorMsg = e.getMessage();
-        log.info(errorMsg);
+        log.info("message : " + e.getMessage() +  ", cause : " + e.getCause());
 
         model.addAttribute("errormsg", errorMsg);
 

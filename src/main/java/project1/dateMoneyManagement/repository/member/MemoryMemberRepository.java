@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Repository
+//@Repository
 public class MemoryMemberRepository implements MemberRepository {
 
     private Map<String, Member> memoryMemberRepository = new ConcurrentHashMap<>();

@@ -5,10 +5,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project1.dateMoneyManagement.Member;
+import project1.dateMoneyManagement.exception.login.DuplicateIdException;
 import project1.dateMoneyManagement.exception.login.NoEnoughInfoException;
+import project1.dateMoneyManagement.exception.login.WrongIdOrPasswordException;
 import project1.dateMoneyManagement.service.login.LoginService;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -61,15 +64,40 @@ public class LoginController {
         log.trace("register");
 
         loginService.register(member);
+        member.setDateConverter();
 
         return "redirect:/login";
+    }
+
+    // login Exception Handler
+    @ExceptionHandler(WrongIdOrPasswordException.class)
+    public String loginFailed(WrongIdOrPasswordException e, Model model, HttpServletRequest request) {
+        log.info("message : " + e.getMessage() +  ", cause : " + e.getCause());
+
+        String loginId = request.getParameter("loginId");
+
+        model.addAttribute("loginId", loginId);
+        model.addAttribute("logFailed", true);
+
+        return "login/loginForm";
+    }
+
+    // register Exception Handler
+    @ExceptionHandler(DuplicateIdException.class)
+    public String duplicateIdError(DuplicateIdException e, Model model) {
+        String errorMsg = e.getMessage();
+        log.info("message : " + e.getMessage() +  ", cause : " + e.getCause());
+
+        model.addAttribute("errormsg", errorMsg);
+
+        return "login/register";
     }
 
     @ExceptionHandler(NoEnoughInfoException.class)
     public String registerError(NoEnoughInfoException e, Model model) {
         String errorMsg = e.getMessage();
 
-        log.info(errorMsg);
+        log.info("message : " + e.getMessage() +  ", cause : " + e.getCause());
 
         model.addAttribute("errormsg", errorMsg);
 

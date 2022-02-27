@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project1.dateMoneyManagement.exception.login.NoEnoughInfoException;
+import project1.dateMoneyManagement.exception.login.WrongAuthCodeException;
 import project1.dateMoneyManagement.exception.login.WrongMatchException;
 import project1.dateMoneyManagement.service.login.LoginService;
 
@@ -42,14 +43,14 @@ public class FindPwController {
         cookie.setMaxAge(60 * 10);
         response.addCookie(cookie);
 
-        return "login/find/pw/authwithcode";
+        return "login/find/pw/authbycode";
     }
 
     @GetMapping("/verifycode")
     public String verifyCodeForm() {
         log.trace("Find password - verify code Form");
 
-        return "login/find/pw/authwithcode";
+        return "login/find/pw/authbycode";
     }
 
     @PostMapping("/verifycode")
@@ -84,7 +85,7 @@ public class FindPwController {
     @ExceptionHandler({NoSuchElementException.class, NoEnoughInfoException.class})
     public String noMatchWithIdOrEmail(RuntimeException e, Model model) {
         String errorMsg = e.getMessage();
-        log.info(errorMsg);
+        log.info("message : " + e.getMessage() +  ", cause : " + e.getCause());
 
         model.addAttribute("errormsg", errorMsg);
 
@@ -92,12 +93,22 @@ public class FindPwController {
     }
 
     @ExceptionHandler(WrongMatchException.class)
-    public String wrongCodeError(WrongMatchException e, Model model) {
+    public String wrongMatchWithPasswordAndCheck(WrongMatchException e, Model model) {
         String errorMsg = e.getMessage();
-        log.info(errorMsg);
+        log.info("message : " + e.getMessage() +  ", cause : " + e.getCause());
 
         model.addAttribute("errormsg", errorMsg);
 
         return "login/find/pw/newpwForm";
+    }
+
+    @ExceptionHandler(WrongAuthCodeException.class)
+    public String wrongAuthCode(WrongAuthCodeException e, Model model) {
+        String errorMsg = e.getMessage();
+        log.info("message : " + e.getMessage() +  ", cause : " + e.getCause());
+
+        model.addAttribute("errormsg", errorMsg);
+
+        return "login/find/pw/authbycode";
     }
 }

@@ -18,9 +18,9 @@
             <div th:text="${errormsg}"></div>
 
             <button onclick="location.href='newpwForm.html'"
-                    th:onclick="|location.href='@{/login/findpw/newpw}'|"
+                    th:onclick="|location.href='@{/login/findpw/verifycode}'|"
                     type="submit">확인</button>
-            <button onclick="location.href='authwithcode.html'"
+            <button onclick="location.href='authbycode.html'"
                     th:onclick="|location.href='@{/login/findpw/sendcode}'|"
                     type="button">메일 다시 전송</button>
             <button onclick="location.href='../../loginForm.html'"

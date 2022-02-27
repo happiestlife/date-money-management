@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.awt.image.BufferedImage;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -16,40 +17,41 @@ public class Member {
     private String id;
     private String password;
     private String email;
-    private String regDate;
     private String nickname;
-    private BufferedImage image;
     private String boyName;
     private String girlName;
+    private final String regDate;
+    private Files image;
 
-    public Member() {}
+    public Member() {
+        regDate = setDateConverter();
+    }
 
     public Member(String id, String password, String email, String nickname, String boyName, String girlName) {
         this.id = id;
         this.password = password;
         this.email = email;
         this.nickname = nickname;
-        this.image = null;
         this.boyName = boyName;
         this.girlName = girlName;
-        this.regDate = dateConverter();
+        this.regDate = setDateConverter();
     }
 
-    public Member(String id, String password, String email, String nickname, BufferedImage image, String boyName, String girlName) {
+    public Member(String id, String password, String email, String nickname, String boyName, String girlName, Files image) {
         this.id = id;
         this.password = password;
         this.email = email;
         this.nickname = nickname;
-        this.image = image;
         this.boyName = boyName;
         this.girlName = girlName;
-        this.regDate = dateConverter();
+        this.regDate = setDateConverter();
+        this.image = image;
     }
 
-    private String dateConverter() {
+    public String setDateConverter() {
         Date now = new Date();
 
-        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a");
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         System.out.println(date.format(now));
         return date.format(now);

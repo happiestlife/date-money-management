@@ -20,6 +20,7 @@ repositories {
 
 dependencies {
 
+	implementation 'org.apache.tomcat:tomcat-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	runtimeOnly'mysql:mysql-connector-java'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'

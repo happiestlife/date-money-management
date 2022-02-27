@@ -8,6 +8,7 @@ import project1.dateMoneyManagement.Member;
 import project1.dateMoneyManagement.repository.member.MemberRepository;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -55,14 +56,5 @@ public class BaseController {
         response.addCookie(cookie);
 
         return "redirect:/";
-    }
-
-    @PostConstruct
-    public void init() {
-        memberRepository.insert(new Member("chickenman10", "1234", "chickenman10@naver.com",
-                "chickenman", null, "이", "최"));
-
-        memberRepository.insert(new Member("ruri", "0820", "aaaa@naver.com",
-                "ruri", null, "이", "최"));
     }
 }
