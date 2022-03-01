@@ -95,6 +95,15 @@ public class MySqlMemberRepository implements MemberRepository {
     }
 
     @Override
+    public int removeAll() {
+        String query = "DELETE FROM " + table;
+
+        int deleteNum = jdbcTemplate.update(query);
+
+        return deleteNum;
+    }
+
+    @Override
     public Member findById(String memberId) {
         String query = "SELECT * FROM %s WHERE id = '%s'";
 
@@ -135,6 +144,11 @@ public class MySqlMemberRepository implements MemberRepository {
 
     @PreDestroy
     public void terminate() {
-        jdbcTemplate.update("DELETE FROM MEMBER");
+        jdbcTemplate.update("DELETE FROM "+table);
     }
+
+    /**
+     * For test Method
+     */
+
 }

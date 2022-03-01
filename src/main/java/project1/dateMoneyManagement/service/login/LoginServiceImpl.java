@@ -40,11 +40,14 @@ public class LoginServiceImpl implements LoginService{
         try {
             Member findMember = memberRepository.findById(id);
 
-            return findMember;
+            if(findMember.getPassword().equals(password))
+                return findMember;
+
         } catch (EmptyResultDataAccessException e) {
+            // 아이디가 존재 X
             log.info("message : " + e.getMessage() +  ", cause : " + e.getCause());
         }
-
+        // 비밀번호 존재 X
         throw new WrongIdOrPasswordException();
     }
 
@@ -63,25 +66,30 @@ public class LoginServiceImpl implements LoginService{
 
             throw new NoEnoughInfoException();
         }
-        try { memberRepository.insert(member); }
+
+        try {
+            memberRepository.insert(member);
+
+            return true;
+        }
         catch (DuplicateKeyException e){
             log.info("message : " + e.getMessage() +  ", cause : " + e.getCause());
 
             throw new DuplicateIdException("해당 아이디는 이미 존재합니다.");
         }
-        return true;
     }
 
     @Override
     public Member findMemberById(String id) {
-        Member findMember = memberRepository.findById(id);
+        try {
+            Member findMember = memberRepository.findById(id);
 
-        if(findMember == null) {
+            return findMember;
+        } catch (EmptyResultDataAccessException e) {
             log.info("Exception occurred - findMemberById");
 
             throw new NoSuchElementException();
         }
-        else return findMember;
     }
 
     @Override
@@ -89,45 +97,52 @@ public class LoginServiceImpl implements LoginService{
         try {
             FindLoginInfoDTO findInfo = memberRepository.findByEmail(email);
 
-            return findInfo.getId();
+            if(findInfo != null) return findInfo.getId();
         }
         catch(EmptyResultDataAccessException e){
             log.info("Exception occurred - findIdByEmail");
-
-            throw new NoSuchElementException("해당 이메일에 대한 아이디는 존재하지 않습니다.");
         }
+        throw new NoSuchElementException("해당 이메일에 대한 아이디는 존재하지 않습니다.");
     }
 
     // 비밀번호 찾기
     @Override
     public String sendAuthCode(String id, String email) {
-        Member findMember = findMemberById(id);
-        if(findMember == null || findMember.getEmail().equals(email) == false) {
+        try {
+            Member findMember = findMemberById(id);
+            if (findMember.getEmail().equals(email) == false) {
+                log.info("Exception occurred - findPwById");
+
+                throw new NoSuchElementException("아이디가 존재하지 않거나 아이디에 대한 이메일 정보가 일치하지 않습니다.");
+            } else {
+                String code = authMailServiceImpl.sendMail(new AuthMailDTO(findMember.getEmail(),
+                        authMailServiceImpl.TITLE,
+                        authMailServiceImpl.MESSAGE,
+                        null), id);
+                idAndCode.put(id, new AuthCode(code));
+
+                return code;
+            }
+        }catch (EmptyResultDataAccessException e){
             log.info("Exception occurred - findPwById");
 
             throw new NoSuchElementException("아이디가 존재하지 않거나 아이디에 대한 이메일 정보가 일치하지 않습니다.");
-        }
-        else {
-            String code = authMailServiceImpl.sendMail(new AuthMailDTO(findMember.getEmail(),
-                    authMailServiceImpl.TITLE,
-                    authMailServiceImpl.MESSAGE,
-                    null), id);
-            idAndCode.put(id, new AuthCode(code));
-
-            return code;
         }
     }
 
     @Override
     public boolean verifyCode(String id, String code) {
         AuthCode authCode = idAndCode.get(id);
-        if (authCode != null && code.equals(authCode.getCode()))
-            return true;
-        else {
+
+        if(authCode == null)
+            throw new NoSuchElementException("해당 아이디는 존재하지 않습니다.");
+        else if (code.equals(authCode.getCode()) == false) {
             log.info("Exception occurred - verifyCode");
 
             throw new WrongAuthCodeException();
         }
+        else
+            return true;
     }
 
     @Override
