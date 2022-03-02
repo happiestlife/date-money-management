@@ -1,37 +1,36 @@
 package project1.dateMoneyManagement.repository.member;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.dao.EmptyResultDataAccessException;
 import project1.dateMoneyManagement.Member;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MemoryMemberRepositoryTest {
 
     private MemoryMemberRepository memberRepository = new MemoryMemberRepository();
-    private List<String> idList = new ArrayList<>();
+
+    private Member member1 = new Member("chickenman10", "1234", "chickenman10@naver.com",
+            "chickenman",  "이", "최");
+    private Member member2 = new Member("ruri", "0820", "aaaa@naver.com",
+            "ruri", "이2", "최2");
 
     @BeforeEach
     void insertSample() {
-        Member member1 = new Member("chickenman10", "1234", "chickenman10@naver.com",
-                "chickenman",  "현성", "보민");
-        Member member2 = new Member("ruri", "0820", "aaaa@naver.com",
-                "ruri", "현성2", "보민2");
-
         memberRepository.insert(member1);
         memberRepository.insert(member2);
-
-        idList.add(member1.getId());
-        idList.add(member2.getId());
     }
 
     @Test
     void insertDataWithNoImage() {
         Member member = new Member("test", "1234", "test@naver.com",
-                "test",  "현성", "보민");
+                "test",  "이", "최");
 
         memberRepository.insert(member);
 
@@ -45,9 +44,9 @@ public class MemoryMemberRepositoryTest {
 
     @Test
     void updateMember_Success() {
-        String id = idList.get(0);
+        String id = member1.getId();
         Member updateMember = new Member(id, "2222", "test@gmail.com",
-                                "test", "현성test", "보민test");
+                                "test", "이test", "최test");
 
         memberRepository.update(id, updateMember);
 
@@ -66,20 +65,19 @@ public class MemoryMemberRepositoryTest {
     void updateMember_FailByWrongId() {
         String id = "xxxx";
         Member updateMember = new Member(id, "2222", "test@gmail.com",
-                "test", "현성test", "보민test");
+                "test", "이test", "최test");
 
         assertThat(memberRepository.update(id, updateMember)).isEqualTo(null);
     }
 
     @Test
     void removeMember_Success() {
-        String id = idList.get(0);
+        String id = member1.getId();
 
         memberRepository.remove(id);
         assertThat(memberRepository.getSize()).isEqualTo(1);
 
-        Member findMember = memberRepository.findById(id);
-        assertThat(findMember).isEqualTo(null);
+        assertThrows(EmptyResultDataAccessException.class, ()->memberRepository.findById(id));
     }
 
     @Test
@@ -92,7 +90,7 @@ public class MemoryMemberRepositoryTest {
     @Test
     void findById_Success() {
         Member member = new Member("test", "2222", "test@gmail.com",
-                "test", "현성test", "보민test");
+                "test", "이test", "최test");
 
         memberRepository.insert(member);
 
@@ -102,8 +100,7 @@ public class MemoryMemberRepositoryTest {
 
     @Test
     void findById_FailByWrongId() {
-        Member findMember = memberRepository.findById("xxxxx");
-        assertThat(findMember).isEqualTo(null);
+        assertThrows(EmptyResultDataAccessException.class, ()->memberRepository.findById("xxxxx"));
     }
 
     @Test
@@ -111,7 +108,7 @@ public class MemoryMemberRepositoryTest {
         List<Member> members = memberRepository.findAll();
         assertThat(members.size()).isEqualTo(2);
 
-        String id = idList.get(0);
+        String id = member1.getId();
         Member findMember = memberRepository.findById(id);
         assertThat(members).contains(findMember);
     }

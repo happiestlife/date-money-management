@@ -4,10 +4,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import project1.dateMoneyManagement.Member;
-import project1.dateMoneyManagement.exception.login.DuplicateIdException;
-import project1.dateMoneyManagement.exception.login.NoEnoughInfoException;
-import project1.dateMoneyManagement.exception.login.WrongIdOrPasswordException;
-import project1.dateMoneyManagement.exception.login.WrongMatchException;
+import project1.dateMoneyManagement.exception.login.*;
 import project1.dateMoneyManagement.repository.member.MemoryMemberRepository;
 
 import java.util.NoSuchElementException;
@@ -60,7 +57,7 @@ public class LoginServiceTest {
     public void register_FailBySameId(){
         Member member1 = new Member("test1", "1", "test1",
                 "test1", "test1", "test1");
-        Member member2 = new Member("test1", "2222", "test2",
+        Member member2 = new Member("test1", "2", "test2",
                 "test2",  "test2", "test2");
 
         loginService.register(member1);
@@ -149,14 +146,14 @@ public class LoginServiceTest {
     public void verifyCode_FailByNoMatchId() {
         String code = loginService.sendAuthCode(member.getId(), member.getEmail());
 
-        assertThrows(WrongMatchException.class, () -> loginService.verifyCode("wrongId", code));
+        assertThrows(NoSuchElementException.class, () -> loginService.verifyCode("wrongId", code));
     }
 
     @Test
     public void verifyCode_FailByWrongMatchCode() {
         String code = loginService.sendAuthCode(member.getId(), member.getEmail());
 
-        assertThrows(WrongMatchException.class, () -> loginService.verifyCode(member.getId(), "wrongCode"));
+        assertThrows(WrongAuthCodeException.class, () -> loginService.verifyCode(member.getId(), "wrongCode"));
     }
 
     @Test
