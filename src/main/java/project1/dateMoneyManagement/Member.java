@@ -4,13 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.awt.image.BufferedImage;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@Setter
-@Getter
+@Setter @Getter
 @ToString
 public class Member {
 

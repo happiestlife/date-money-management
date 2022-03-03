@@ -15,7 +15,7 @@ import java.util.NoSuchElementException;
 
 @Slf4j
 @Controller
-@RequestMapping("/login/findpw")
+@RequestMapping("/login/find/pw")
 public class FindPwController {
 
     private final LoginService loginService;
@@ -43,41 +43,64 @@ public class FindPwController {
         cookie.setMaxAge(60 * 10);
         response.addCookie(cookie);
 
-        return "login/find/pw/authbycode";
+        return "redirect:/login/find/pw/verifycode";
     }
 
     @GetMapping("/verifycode")
-    public String verifyCodeForm() {
-        log.trace("Find password - verify code Form");
+    public String verifyCodeForm(@CookieValue(value = "id", required = false) Cookie cookie) {
+        log.trace("Find password redirect - verify code Form");
 
-        return "login/find/pw/authbycode";
+        if(cookie == null)
+            return "redirect:/login/find/pw";
+
+        return "login/find/pw/verifycode";
     }
 
     @PostMapping("/verifycode")
     public String verifyCode(@RequestParam String code,
-                             @CookieValue(value = "id") Cookie cookie) {
+                             @CookieValue(value = "id") Cookie cookie,
+                             HttpServletResponse response) {
         log.trace("Find password - verify code");
 
         String id = cookie.getValue();
         loginService.verifyCode(id, code);
 
+        Cookie c = new Cookie("auth", "true");
+        c.setMaxAge(60 * 2);
+        response.addCookie(c);
+
+        return "redirect:/login/find/pw/newpw";
+    }
+
+    @GetMapping("/newpw")
+    public String returnToFirstFindPasswordForm(@CookieValue(value = "auth", required = false) Cookie cookie) {
+        log.trace("Find password redirect - new password Form");
+
+        if(cookie == null)
+            return "redirect:/login/find/pw";
+
         return "login/find/pw/newpwForm";
     }
 
     @PostMapping("/newpw")
-    public String newPassword(@CookieValue(value = "id") Cookie cookie,
+    public String newPassword(@CookieValue(value = "id") Cookie idCookie,
+                              @CookieValue(value = "auth") Cookie authCookie,
                               @RequestParam String pw,
                               @RequestParam String check,
                               HttpServletResponse response) {
         log.trace("Find password - update new password");
-        String id = cookie.getValue();
+        String id = idCookie.getValue();
 
         loginService.updatePw(id, pw, check);
 
 
-        cookie.setValue(null);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
+        idCookie.setValue(null);
+        idCookie.setMaxAge(0);
+        response.addCookie(idCookie);
+
+        authCookie.setValue(null);
+        authCookie.setMaxAge(0);
+        response.addCookie(authCookie);
 
         return "redirect:/login";
     }
@@ -109,6 +132,6 @@ public class FindPwController {
 
         model.addAttribute("errormsg", errorMsg);
 
-        return "login/find/pw/authbycode";
+        return "login/find/pw/verifycode";
     }
 }

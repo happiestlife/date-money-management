@@ -10,7 +10,7 @@
     <h2>비밀번호 찾기</h2>
     <fieldset>
         <legend>"이메일로 전송된 코드를 입력하세요."</legend>
-        <form action="newpwForm.html" th:action="@{/login/findpw/verifycode}" method="post">
+        <form action="newpwForm.html" th:action="@{/login/find/pw/verifycode}" method="post">
 
             <label for="code">코드</label>
             <input type="text" id="code" name="code">
@@ -18,10 +18,9 @@
             <div th:text="${errormsg}"></div>
 
             <button onclick="location.href='newpwForm.html'"
-                    th:onclick="|location.href='@{/login/findpw/verifycode}'|"
                     type="submit">확인</button>
-            <button onclick="location.href='authbycode.html'"
-                    th:onclick="|location.href='@{/login/findpw/sendcode}'|"
+            <button onclick="location.href='verifycode.html'"
+                    th:onclick="|location.href='@{/login/find/pw/sendcode}'|"
                     type="button">메일 다시 전송</button>
             <button onclick="location.href='../../loginForm.html'"
                     th:onclick="|location.href='@{/login}'|"

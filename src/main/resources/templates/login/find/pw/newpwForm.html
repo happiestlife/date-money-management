@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thyleaef.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,7 +10,7 @@
     <h2>비밀번호 찾기</h2>
     <fieldset>
         <legend>"새로운 비밀번호를 저장합니다."</legend>
-        <form action="../loginForm.html" th:action="@{/login/findpw/newpw}" method="post">
+        <form action="../loginForm.html" th:action="@{/login/find/pw/newpw}" method="post">
 
             <label for="pw">비밀번호 </label>
             <input type="password" id="pw" name="pw">
@@ -21,7 +21,6 @@
             <div th:text="${errormsg}"></div>
 
             <button onclick="location.href='../../loginForm.html'"
-                    th:onclick="|location.href='@{/login/findpw/newpw}'|"
                     type="submit">확인</button>
             <button onclick="location.href='../../loginForm.html'"
                     th:onclick="|location.href='@{/login}'|"
