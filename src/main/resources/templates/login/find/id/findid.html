@@ -6,23 +6,24 @@
     <title>아이디 찾기</title>
 </head>
 <body>
-    <h1>데이트비 관리 프로그램</h1>
-    <h2>아이디 찾기</h2>
+    <h1 th:text="#{title}">데이트비 관리 프로그램</h1>
+    <h2 th:text="#{findId}">아이디 찾기</h2>
     <fieldset>
-        <legend>"이메일을 통해서 아이디를 찾습니다."</legend>
+        <legend th:text="#{findIdWithEmail}">"이메일을 통해서 아이디를 찾습니다."</legend>
         <form action="showid.html" th:action="@{/login/findid}" method="post">
 
-            <label for="email">이메일</label>
+            <label for="email" th:text="#{email}">이메일</label>
             <input type="text" id="email" name="email">
 
             <div th:text="${errormsg}"></div>
 
             <button onclick="location.href='showId.html'"
                     th:onclick="|location.href='@{/login/findid}'|"
+                    th:text="#{findId}"
                     type="submit">아이디 찾기</button>
             <button onclick="location.href='../../loginForm.html'"
                     th:onclick="|location.href='@{/login}'|"
-                    type="button">돌아가기</button>
+                    th:text="#{return}" type="button">돌아가기</button>
         </form>
     </fieldset>
 </body>

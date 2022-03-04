@@ -6,10 +6,10 @@
     <title>아이디 찾기</title>
 </head>
 <body>
-    <h1>데이트비 관리 프로그램</h1>
-    <h2>아이디 찾기</h2>
+    <h1 th:text="#{title}">데이트비 관리 프로그램</h1>
+    <h2 th:text="#{findId}">아이디 찾기</h2>
 
-    <label>이메일에 해당하는 아이디를 보여줍니다.</label>
+    <label th:text="#{idFoundByEmail}">이메일에 해당하는 아이디를 보여줍니다.</label>
 
     <hr>
 
@@ -18,10 +18,12 @@
         <button onclick="location.href='../pw/findpw.html'"
                 th:onclick="|location.href='@{/login/findpw}'|"
                 th:value="${email}"
+                th:text="#{findPassword}"
                 type="button">비밀번호 찾기</button>
     </form>
     <button onclick="location.href='../../loginForm.html'"
             th:onclick="|location.href='@{/login}'|"
+            th:text="#{return}"
             type="button">돌아가기</button>
 </body>
 </html>

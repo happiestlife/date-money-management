@@ -6,52 +6,54 @@
     <title>회원가입</title>
 </head>
 <body>
-    <h1>데이트비 관리 프로그램</h1>
+    <h1 th:text="#{title}"></h1>
     <form action="loginForm.html" th:action method="post">
         <fieldset>
-            <legend>회원가입</legend>
+            <legend th:text="#{register}">회원가입</legend>
             <ul>
                 <li>
-                    <label for="id">아이디 </label>
+                    <label for="id" th:text="#{id}">아이디 </label>
                     <input type="text" id="id" name="id">
                 </li>
                 <h5 th:text="${errormsg}"></h5>
 
                 <li>
-                    <label for="password">비밀번호 </label>
+                    <label for="password" th:text="#{password}">비밀번호 </label>
                     <input type="password" id="password" name="password">
                 </li>
-                <h5>"비밀번호는 영어,숫자,특수문자를 최소 한개 이상씩 포함해주세요"</h5>
+                <h5 th:text="#{passwordPattern}">"비밀번호는 영어,숫자,특수문자를 최소 한개 이상씩 포함해주세요."</h5>
 
                 <li>
-                    <label for="email">이메일 </label>
+                    <label for="email" th:text="#{email}">이메일 </label>
                     <input type="text" id="email" name="email">
                 </li>
                 <h5></h5>
 
                 <li>
-                    <label for="nickname">커플 닉네임 </label>
+                    <label for="nickname" th:text="#{nickname}">커플 닉네임 </label>
                     <input type="text" id="nickname" name="nickname">
                 </li>
                 <h5></h5>
 
                 <li>
-                    <label for="boyName">남자친구 이름 </label>
+                    <label for="boyName" th:text="#{boyName}">남자친구 이름 </label>
                     <input type="text" id="boyName" name="boyName">
                 </li>
                 <h5></h5>
 
                 <li>
-                    <label for="girlName">여자친구 이름 </label>
+                    <label for="girlName" th:text="#{girlName}">여자친구 이름 </label>
                     <input type="text" id="girlName" name="girlName">
                 </li>
             </ul>
             <button onclick="location.href='loginForm.html'"
                     th:onclick="|location.href='@{/login/register}'|"
+                    th:text="#{register}"
                     type="submit">회원가입</button>
             <button onclick="location.href='loginForm.html'"
                     th:onclick="|location.href='@{/login}'|"
-                    type="button">취소</button>
+                    th:text="#{return}"
+                    type="button">돌아가기</button>
         </fieldset>
     </form>
 </body>

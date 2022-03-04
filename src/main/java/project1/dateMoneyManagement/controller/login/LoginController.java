@@ -34,18 +34,18 @@ public class LoginController {
     }
 
     @PostMapping
-    public String login(@RequestParam String loginId,
+    public String login(@RequestParam String id,
                         @RequestParam String pw,
                         HttpSession session,
                         HttpServletResponse response) {
         log.trace("login");
 
-        Member loginMember = loginService.login(loginId, pw);
+        Member loginMember = loginService.login(id, pw);
         // 로그인 성공시 아래로 코드 진행, 익셉션(WrongIdOrPassword) 발생 시 LoginExceptionController에서 에러 처리 메서드 실행
 
-        session.setAttribute(loginId, loginMember);
+        session.setAttribute(id, loginMember);
 
-        Cookie cookie = new Cookie("loginId", loginId);
+        Cookie cookie = new Cookie("loginId", id);
         cookie.setMaxAge(60 * 60 * 24);
         response.addCookie(cookie);
 
