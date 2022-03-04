@@ -94,13 +94,13 @@ public class FindPwController {
         loginService.updatePw(id, pw, check);
 
 
-        idCookie.setValue(null);
-        idCookie.setMaxAge(0);
-        response.addCookie(idCookie);
+        Cookie c1 = new Cookie("id", null);
+        c1.setMaxAge(0);
+        response.addCookie(c1);
 
-        authCookie.setValue(null);
-        authCookie.setMaxAge(0);
-        response.addCookie(authCookie);
+        Cookie c2 = new Cookie("auth", null);
+        c2.setMaxAge(0);
+        response.addCookie(c2);
 
         return "redirect:/login";
     }

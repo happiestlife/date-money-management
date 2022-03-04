@@ -2,7 +2,6 @@ package project1.dateMoneyManagement.repository.member;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.junit.jupiter.api.*;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import project1.dateMoneyManagement.Member;
 
@@ -97,7 +96,8 @@ class MySqlMemberRepositoryTest {
         repository.remove(id);
         assertThat(repository.findAll().size()).isEqualTo(1);
 
-        assertThrows(EmptyResultDataAccessException.class, ()->repository.findById(id));
+        Member findMember = repository.findById(id);
+        assertThat(findMember).isNull();
     }
 
     @Test
@@ -116,7 +116,8 @@ class MySqlMemberRepositoryTest {
 
     @Test
     void findById_FailByWrongId() {
-        assertThrows(EmptyResultDataAccessException.class, ()-> repository.findById("xxxxx"));
+        Member findMember = repository.findById("xxxxx");
+        assertThat(findMember).isNull();
     }
 
     @Test

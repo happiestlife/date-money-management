@@ -1,5 +1,7 @@
 package project1.dateMoneyManagement.repository.member;
 
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -51,9 +53,13 @@ public class MySqlMemberRepository implements MemberRepository {
                 member.getRegDate(),
                 member.getImage());
 
-        int flag = jdbcTemplate.update(query);
+        try {
+            int flag = jdbcTemplate.update(query);
 
-        return flag == 1 ? true : false;
+            return flag == 1 ? true : false;
+        } catch (DuplicateKeyException e) {
+            return false;
+        }
     }
 
     @Override
@@ -109,9 +115,13 @@ public class MySqlMemberRepository implements MemberRepository {
 
         query = String.format(query, table, memberId);
 
-        Member member = jdbcTemplate.queryForObject(query, new MemberRowMapper());
+        try {
+            Member member = jdbcTemplate.queryForObject(query, new MemberRowMapper());
 
-        return member;
+            return member;
+        }catch (EmptyResultDataAccessException e){
+            return null;
+        }
     }
 
     @Override
@@ -127,9 +137,13 @@ public class MySqlMemberRepository implements MemberRepository {
 
         query = String.format(query, table, email);
 
-        Member member = jdbcTemplate.queryForObject(query, new MemberRowMapper());
+        try {
+            Member member = jdbcTemplate.queryForObject(query, new MemberRowMapper());
 
-        return new FindLoginInfoDTO(member.getId(), member.getPassword());
+            return new FindLoginInfoDTO(member.getId(), member.getPassword());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
 

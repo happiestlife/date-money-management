@@ -1,7 +1,5 @@
 package project1.dateMoneyManagement.repository.member;
 
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 import project1.dateMoneyManagement.Member;
 
@@ -25,7 +23,8 @@ public class MemoryMemberRepository implements MemberRepository {
 
             return true;
         }else
-            throw new DuplicateKeyException("해당 아이디는 이미 존재합니다.");
+            return false;
+//            throw new DuplicateKeyException("해당 아이디는 이미 존재합니다.");
     }
 
     @Override
@@ -78,22 +77,16 @@ public class MemoryMemberRepository implements MemberRepository {
 
     @Override
     public Member findById(String memberId) {
-        Member member = memoryMemberRepository.get(memberId);
-
-        if(member == null)
-            throw new EmptyResultDataAccessException(1);
-        else
-            return member;
+        return memoryMemberRepository.get(memberId);
+//        throw new EmptyResultDataAccessException(1);
     }
 
     @Override
     public FindLoginInfoDTO findByEmail(String email) {
-        FindLoginInfoDTO idInfo = emailAndId.get(email);
+        return emailAndId.get(email);
 
-        if(idInfo == null)
-            throw new EmptyResultDataAccessException(1);
-        else
-            return idInfo;
+
+//            throw new EmptyResultDataAccessException(1);
     }
 
     @Override

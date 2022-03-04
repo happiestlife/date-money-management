@@ -1,12 +1,9 @@
 package project1.dateMoneyManagement.repository.member;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.dao.EmptyResultDataAccessException;
 import project1.dateMoneyManagement.Member;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -77,7 +74,8 @@ public class MemoryMemberRepositoryTest {
         memberRepository.remove(id);
         assertThat(memberRepository.getSize()).isEqualTo(1);
 
-        assertThrows(EmptyResultDataAccessException.class, ()->memberRepository.findById(id));
+        Member findMember = memberRepository.findById(id);
+        assertThat(findMember).isNull();
     }
 
     @Test
@@ -100,7 +98,8 @@ public class MemoryMemberRepositoryTest {
 
     @Test
     void findById_FailByWrongId() {
-        assertThrows(EmptyResultDataAccessException.class, ()->memberRepository.findById("xxxxx"));
+        Member findMember = memberRepository.findById("xxxxx");
+        assertThat(findMember).isNull();
     }
 
     @Test
