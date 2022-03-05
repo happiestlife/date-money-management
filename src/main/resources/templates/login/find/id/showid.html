@@ -13,7 +13,7 @@
 
     <hr>
 
-    <div th:text="|${email}의 아이디는 ${id}입니다.|"></div>
+    <div th:text="#{showId(${email},${id})}"></div>
     <form method="post">
         <button onclick="location.href='../pw/findpw.html'"
                 th:onclick="|location.href='@{/login/findpw}'|"

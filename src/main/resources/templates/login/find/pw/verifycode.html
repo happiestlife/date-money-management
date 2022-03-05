@@ -15,7 +15,7 @@
             <label for="code" th:text="#{code}">코드</label>
             <input type="text" id="code" name="code">
 
-            <div th:text="${errormsg}"></div>
+            <div th:if="${errormsg != null and errormsg.equals('wrongAuthCode')}" th:text="#{wrongAuthCode}"></div>
 
             <button onclick="location.href='newpwForm.html'"
                     th:text="#{confirm}"

@@ -18,7 +18,7 @@
             <label for="check" th:text="#{pwCheck}">비밀번호 확인 </label>
             <input type="password" id="check" name="check">
 
-            <div th:text="${errormsg}"></div>
+            <div th:if="${errormsg != null and errormsg.equals('notMatchPasswordWithCheck')}" th:text="#{notMatchPasswordWithCheck}"></div>
 
             <button onclick="location.href='../../loginForm.html'"
                     th:text="#{confirm}"

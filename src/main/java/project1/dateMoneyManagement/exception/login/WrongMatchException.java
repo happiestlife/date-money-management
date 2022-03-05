@@ -1,8 +1,8 @@
 package project1.dateMoneyManagement.exception.login;
 
 public class WrongMatchException extends RuntimeException{
-    private static String msg;
-    public WrongMatchException(String msg) {
+    private final static String msg = "notMatchPasswordWithCheck";
+    public WrongMatchException() {
         super(msg);
     }
 }

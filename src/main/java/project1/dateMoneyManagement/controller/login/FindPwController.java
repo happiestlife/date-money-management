@@ -105,24 +105,14 @@ public class FindPwController {
         return "redirect:/login";
     }
 
-    @ExceptionHandler({NoSuchElementException.class, NoEnoughInfoException.class})
-    public String noMatchWithIdOrEmail(RuntimeException e, Model model) {
+    @ExceptionHandler(NoSuchElementException.class)
+    public String noMatchWithIdOrEmail(NoSuchElementException e, Model model) {
         String errorMsg = e.getMessage();
         log.info("message : " + e.getMessage() +  ", cause : " + e.getCause());
 
         model.addAttribute("errormsg", errorMsg);
 
         return "login/find/pw/findpw";
-    }
-
-    @ExceptionHandler(WrongMatchException.class)
-    public String wrongMatchWithPasswordAndCheck(WrongMatchException e, Model model) {
-        String errorMsg = e.getMessage();
-        log.info("message : " + e.getMessage() +  ", cause : " + e.getCause());
-
-        model.addAttribute("errormsg", errorMsg);
-
-        return "login/find/pw/newpwForm";
     }
 
     @ExceptionHandler(WrongAuthCodeException.class)
@@ -133,5 +123,15 @@ public class FindPwController {
         model.addAttribute("errormsg", errorMsg);
 
         return "login/find/pw/verifycode";
+    }
+
+    @ExceptionHandler(WrongMatchException.class)
+    public String wrongMatchWithPasswordAndCheck(WrongMatchException e, Model model) {
+        String errorMsg = e.getMessage();
+        log.info("message : " + e.getMessage() +  ", cause : " + e.getCause());
+
+        model.addAttribute("errormsg", errorMsg);
+
+        return "login/find/pw/newpwForm";
     }
 }

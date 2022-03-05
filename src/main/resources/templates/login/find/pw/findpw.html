@@ -18,7 +18,7 @@
             <label for="email" th:text="#{email}">이메일</label>
             <input type="text" id="email" name="email" th:value="email">
 
-            <div th:text="${errormsg}"></div>
+            <div th:if="${errormsg != null and errormsg.startsWith('noId')}" th:text="#{noIdExistOrCorrespondToEmail}"></div>
 
             <button onclick="location.href='verifycode.html'"
                     th:text="#{confirm}"

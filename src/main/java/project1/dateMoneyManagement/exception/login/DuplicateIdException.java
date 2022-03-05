@@ -1,7 +1,8 @@
 package project1.dateMoneyManagement.exception.login;
 
 public class DuplicateIdException extends RuntimeException {
-    public DuplicateIdException(String msg) {
+    private static final String msg = "duplicateIdExist";
+    public DuplicateIdException() {
         super(msg);
     }
 }

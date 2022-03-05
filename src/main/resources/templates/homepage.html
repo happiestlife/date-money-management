@@ -7,13 +7,13 @@
 </head>
 <body>
     <h1 th:text="#{title}">데이트비 관리 프로그램</h1>
-    <div th:text="|${member.nickname}님|"></div>
-
+    <div th:text="#{greeting(${member.nickname})}"></div>
     <form action="login/loginForm.html" th:action="@{/}" method="post">
-    <button onclick="location.href='login/loginForm.html'"
-            th:onclick="|location.href='@{/}'|"
-            th:text="#{logout}"
-            type="submit" th:name="logout" th:value="logout">로그아웃</button>
+        <button onclick="location.href='login/loginForm.html'"
+                th:onclick="|location.href='@{/}'|"
+                th:name="logout" th:value="logout"
+                th:text="#{logout}"
+                type="submit">로그아웃</button>
     </form>
 </body>
 </html>
