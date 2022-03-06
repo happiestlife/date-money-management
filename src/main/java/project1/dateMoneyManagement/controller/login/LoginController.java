@@ -72,12 +72,13 @@ public class LoginController {
     // login Exception Handler
     @ExceptionHandler(WrongIdOrPasswordException.class)
     public String loginFailed(WrongIdOrPasswordException e, Model model, HttpServletRequest request) {
-        log.info("message : " + e.getMessage() +  ", cause : " + e.getCause());
+        String errorMsg = e.getMessage();
+        log.info("message : " + errorMsg +  ", cause : " + e.getCause());
 
         String loginId = request.getParameter("loginId");
 
         model.addAttribute("loginId", loginId);
-        model.addAttribute("logFailed", true);
+        model.addAttribute("errormsg", errorMsg);
 
         return "login/loginForm";
     }

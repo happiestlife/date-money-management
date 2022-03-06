@@ -15,7 +15,8 @@
             <label for="email" th:text="#{email}">이메일</label>
             <input type="text" id="email" name="email">
 
-            <div th:if="${errormsg != null and errormsg.equals('noIdCorrespondToEmail')}" th:text="#{noIdCorrespondToEmail}"></div>
+            <h5 th:if="${errormsg != null}" th:text="#{|${errormsg}|}"></h5>
+<!--            <div th:if="${errormsg != null and errormsg.equals('noIdCorrespondToEmail')}" th:text="#{noIdCorrespondToEmail}"></div>-->
 
             <button onclick="location.href='showId.html'"
                     th:onclick="|location.href='@{/login/findid}'|"

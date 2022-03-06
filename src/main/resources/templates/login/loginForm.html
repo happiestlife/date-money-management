@@ -20,7 +20,8 @@
                         <input type="password" id="pw" name="pw">
                     </li>
                 </ul>
-                <h3 th:if="${logFailed}" th:text="#{loginFailByWrongIdOrPassword}">아이디가 존재하지 않거나 비밀번호가 틀립니다.</h3>
+                <h5 th:if="${errormsg != null}" th:text="#{|${errormsg}|}"></h5>
+<!--                <h3 th:if="${logFailed}" th:text="#{loginFailByWrongIdOrPassword}">아이디가 존재하지 않거나 비밀번호가 틀립니다.</h3>-->
             </fieldset>
             <button onclick="location.href='../homepage.html'"
                     th:onclick="|location.href='@{/login}'|"

@@ -25,8 +25,11 @@ public class FindPwController {
     }
 
     @GetMapping
-    public String findPwForm() {
+    public String findPwForm(@RequestParam(required = false) String id, Model model) {
         log.trace("Find password - insert id and email Form");
+
+        if(id != null)
+            model.addAttribute("id", id);
 
         return "login/find/pw/findpw";
     }

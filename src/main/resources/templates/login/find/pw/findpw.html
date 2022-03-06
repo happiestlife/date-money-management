@@ -13,12 +13,13 @@
         <form action="verifycode.html" th:action="@{/login/find/pw}" method="post">
 
             <label for="id" th:text="#{id}">아이디</label>
-            <input type="text" id="id" name="id">
+            <input type="text" id="id" name="id" th:text="id">
 
             <label for="email" th:text="#{email}">이메일</label>
             <input type="text" id="email" name="email" th:value="email">
 
-            <div th:if="${errormsg != null and errormsg.startsWith('noId')}" th:text="#{noIdExistOrCorrespondToEmail}"></div>
+            <h5 th:if="${errormsg != null}" th:text="#{noIdExistOrCorrespondToEmail}"></h5>
+<!--            <div th:if="${errormsg != null and errormsg.startsWith('noId')}" th:text="#{noIdExistOrCorrespondToEmail}"></div>-->
 
             <button onclick="location.href='verifycode.html'"
                     th:text="#{confirm}"
