@@ -136,7 +136,7 @@ public class LoginServiceImpl implements LoginService{
 
     @Override
     public boolean updatePw(String id, String newPw, String check) {
-        if(newPw.equals(check) == false) {
+        if(newPw == "" || newPw.equals(check) == false) {
             log.info("Exception occurred - updatePw");
 
             throw new WrongMatchException();

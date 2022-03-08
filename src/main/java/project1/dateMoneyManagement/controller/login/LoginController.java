@@ -3,6 +3,9 @@ package project1.dateMoneyManagement.controller.login;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import project1.dateMoneyManagement.Member;
 import project1.dateMoneyManagement.exception.login.DuplicateIdException;
@@ -14,6 +17,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @Slf4j
 @Controller
@@ -27,18 +31,29 @@ public class LoginController {
     }
 
     @GetMapping
-    public String loginForm() {
+    public String loginForm(Model model) {
         log.trace("loginForm");
+        model.addAttribute("login", new LoginVO());
 
         return "login/loginForm";
     }
 
     @PostMapping
-    public String login(@RequestParam String id,
-                        @RequestParam String pw,
+    public String login(@Validated @ModelAttribute("login") LoginVO login,
+                        BindingResult error,
+                        Model model,
                         HttpSession session,
                         HttpServletResponse response) {
+        if (error.hasErrors()) {
+            if(login != null && login.getId() != null)
+                model.addAttribute("id", login.getId());
+
+            return "login/loginForm";
+        }
+
         log.trace("login");
+        String id = login.getId();
+        String pw = login.getPassword();
 
         Member loginMember = loginService.login(id, pw);
         // 로그인 성공시 아래로 코드 진행, 익셉션(WrongIdOrPassword) 발생 시 LoginExceptionController에서 에러 처리 메서드 실행
@@ -60,8 +75,10 @@ public class LoginController {
     }
 
     @PostMapping("/register")
-    public String register(@ModelAttribute Member member) {
+    public String register(@Validated @ModelAttribute Member member, BindingResult error) {
         log.trace("register");
+        if(error.hasErrors())
+            return "login/register";
 
         loginService.register(member);
         member.setDateConverter();
@@ -75,10 +92,11 @@ public class LoginController {
         String errorMsg = e.getMessage();
         log.info("message : " + errorMsg +  ", cause : " + e.getCause());
 
-        String loginId = request.getParameter("loginId");
+        String id = request.getParameter("id");
 
-        model.addAttribute("loginId", loginId);
+        model.addAttribute("id", id);
         model.addAttribute("errormsg", errorMsg);
+        model.addAttribute("login", new LoginVO());
 
         return "login/loginForm";
     }

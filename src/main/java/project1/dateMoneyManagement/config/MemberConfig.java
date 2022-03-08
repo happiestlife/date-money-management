@@ -11,7 +11,7 @@ public class MemberConfig {
     public DataSource dataSource() {
         DataSource ds = new DataSource();
         ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        ds.setUrl("jdbc:mysql://localhost:3306/date_money_management_db_test");
+        ds.setUrl("jdbc:mysql://localhost:3306/dmmdb");
         ds.setUsername("root");
         ds.setPassword("@dlgustjd1234");
 

@@ -3,9 +3,11 @@ package project1.dateMoneyManagement.controller.login;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import project1.dateMoneyManagement.service.login.LoginService;
 
+import javax.validation.constraints.NotBlank;
 import java.util.NoSuchElementException;
 
 @Slf4j
@@ -27,7 +29,7 @@ public class FindIdController {
     }
 
     @PostMapping
-    public String findId(@RequestParam String email, Model model) {
+    public String findId(@RequestParam @NotBlank(message = "notEnoughInfo") String email, BindingResult error, Model model) {
         log.trace("find Id - insert email");
 
         String id = loginService.findIdByEmail(email);

@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import project1.dateMoneyManagement.exception.login.NoEnoughInfoException;
 import project1.dateMoneyManagement.exception.login.WrongAuthCodeException;
 import project1.dateMoneyManagement.exception.login.WrongMatchException;
 import project1.dateMoneyManagement.service.login.LoginService;
@@ -95,7 +94,6 @@ public class FindPwController {
         String id = idCookie.getValue();
 
         loginService.updatePw(id, pw, check);
-
 
         Cookie c1 = new Cookie("id", null);
         c1.setMaxAge(0);
