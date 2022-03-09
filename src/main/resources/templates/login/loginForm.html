@@ -23,8 +23,8 @@
                     </li>
                 </ul>
 
-                <div class="id-error" th:errors="*{id}" th></div>
-                <div th:if="${login.id != ''}" class="password-error" th:errors="*{password}" ></div>
+                <h5 class="id-error" th:errors="*{id}" th></h5>
+                <h5 th:if="${login.id != ''}" class="password-error" th:errors="*{password}" ></h5>
                 <h5 th:if="${errormsg != null}" th:text="#{|${errormsg}|}"></h5>
 
             </fieldset>

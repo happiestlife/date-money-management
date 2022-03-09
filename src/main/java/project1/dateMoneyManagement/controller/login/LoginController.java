@@ -17,7 +17,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 @Slf4j
 @Controller
@@ -68,14 +67,15 @@ public class LoginController {
     }
 
     @GetMapping("/register")
-    public String registerForm() {
+    public String registerForm(Model model) {
         log.trace("registerForm");
+        model.addAttribute("member", new Member());
 
         return "login/register";
     }
 
     @PostMapping("/register")
-    public String register(@Validated @ModelAttribute Member member, BindingResult error) {
+    public String register(@Validated @ModelAttribute("member") Member member, BindingResult error) {
         log.trace("register");
         if(error.hasErrors())
             return "login/register";
@@ -108,17 +108,7 @@ public class LoginController {
         log.info("message : " + e.getMessage() +  ", cause : " + e.getCause());
 
         model.addAttribute("errormsg", errorMsg);
-
-        return "login/register";
-    }
-
-    @ExceptionHandler(NoEnoughInfoException.class)
-    public String registerError(NoEnoughInfoException e, Model model) {
-        String errorMsg = e.getMessage();
-
-        log.info("message : " + e.getMessage() +  ", cause : " + e.getCause());
-
-        model.addAttribute("errormsg", errorMsg);
+        model.addAttribute("member", new Member());
 
         return "login/register";
     }

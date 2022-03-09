@@ -10,6 +10,7 @@ import project1.dateMoneyManagement.repository.member.FindLoginInfoDTO;
 import project1.dateMoneyManagement.repository.member.MemberRepository;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @Service
@@ -19,7 +20,7 @@ public class LoginServiceImpl implements LoginService{
     private final MemberRepository memberRepository;
     private final AuthMailService authMailServiceImpl;
 
-    private Map<String, AuthCode> idAndCode = new HashMap<>();
+    private Map<String, AuthCode> idAndCode = new ConcurrentHashMap<>();
 
     @Scheduled(cron = "* * 3 * * *")
     public void removeTrashCode() {
@@ -52,17 +53,7 @@ public class LoginServiceImpl implements LoginService{
     // 회원가입
     @Override
     public boolean register(Member member){
-        if (member.getId() == "" ||
-                member.getPassword() == "" ||
-                member.getEmail() == "" ||
-                member.getNickname() == "" ||
-                member.getBoyName() == "" ||
-                member.getGirlName() == "") {
-            log.info("Exception occurred - register");
-
-            throw new NoEnoughInfoException();
-        }
-        else if(memberRepository.insert(member) == false){
+        if(memberRepository.insert(member) == false){
             log.info("Exception occurred - register");
 
             throw new DuplicateIdException();
