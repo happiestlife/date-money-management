@@ -65,11 +65,12 @@ public class Member {
     }
 
     public String setDateConverter() {
-        Date now = new Date();
+        if(regDate != null || regDate == "")
+            return regDate;
 
+        Date now = new Date();
         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        System.out.println(date.format(now));
         return date.format(now);
     }
 }

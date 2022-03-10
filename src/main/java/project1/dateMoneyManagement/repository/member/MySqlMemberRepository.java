@@ -54,9 +54,9 @@ public class MySqlMemberRepository implements MemberRepository {
                 member.getImage());
 
         try {
-            int flag = jdbcTemplate.update(query);
+            jdbcTemplate.update(query);
 
-            return flag == 1 ? true : false;
+            return true;
         } catch (DuplicateKeyException e) {
             return false;
         }

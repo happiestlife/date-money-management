@@ -7,7 +7,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import project1.dateMoneyManagement.Member;
-import project1.dateMoneyManagement.exception.login.DuplicateIdException;
 import project1.dateMoneyManagement.exception.login.WrongIdOrPasswordException;
 import project1.dateMoneyManagement.service.login.LoginService;
 
@@ -49,6 +48,7 @@ public class LoginController {
         }
 
         log.trace("login");
+
         String id = login.getId();
         String pw = login.getPassword();
 
@@ -64,25 +64,25 @@ public class LoginController {
         return "redirect:/";
     }
 
-    @GetMapping("/register")
-    public String registerForm(Model model) {
-        log.trace("registerForm");
-        model.addAttribute("member", new Member());
-
-        return "login/register";
-    }
-
-    @PostMapping("/register")
-    public String register(@Validated @ModelAttribute("member") Member member, BindingResult error) {
-        log.trace("register");
-        if(error.hasErrors())
-            return "login/register";
-
-        loginService.register(member);
-        member.setDateConverter();
-
-        return "redirect:/login";
-    }
+//    @GetMapping("/register")
+//    public String registerForm(Model model) {
+//        log.trace("registerForm");
+//        model.addAttribute("member", new Member());
+//
+//        return "login/register";
+//    }
+//
+//    @PostMapping("/register")
+//    public String register(@Validated @ModelAttribute("member") Member member, BindingResult error) {
+//        log.trace("register");
+//        if(error.hasErrors())
+//            return "login/register";
+//
+//        loginService.register(member);
+//        member.setDateConverter();
+//
+//        return "redirect:/login";
+//    }
 
     // login Exception Handler
     @ExceptionHandler(WrongIdOrPasswordException.class)
@@ -98,16 +98,16 @@ public class LoginController {
 
         return "login/loginForm";
     }
-
-    // register Exception Handler
-    @ExceptionHandler(DuplicateIdException.class)
-    public String duplicateIdError(DuplicateIdException e, Model model) {
-        String errorMsg = e.getMessage();
-        log.info("message : " + e.getMessage() +  ", cause : " + e.getCause());
-
-        model.addAttribute("errormsg", errorMsg);
-        model.addAttribute("member", new Member());
-
-        return "login/register";
-    }
+//
+//    // register Exception Handler
+//    @ExceptionHandler(DuplicateIdException.class)
+//    public String duplicateIdError(DuplicateIdException e, Model model) {
+//        String errorMsg = e.getMessage();
+//        log.info("message : " + e.getMessage() +  ", cause : " + e.getCause());
+//
+//        model.addAttribute("errormsg", errorMsg);
+//        model.addAttribute("member", new Member());
+//
+//        return "login/register";
+//    }
 }
