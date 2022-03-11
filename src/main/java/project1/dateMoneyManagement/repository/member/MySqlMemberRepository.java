@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import project1.dateMoneyManagement.Member;
+import project1.dateMoneyManagement.model.Member;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -160,9 +160,4 @@ public class MySqlMemberRepository implements MemberRepository {
     public void terminate() {
         jdbcTemplate.update("DELETE FROM "+table);
     }
-
-    /**
-     * For test Method
-     */
-
 }

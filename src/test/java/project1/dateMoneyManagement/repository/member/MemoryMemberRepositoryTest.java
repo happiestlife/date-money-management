@@ -2,12 +2,11 @@ package project1.dateMoneyManagement.repository.member;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import project1.dateMoneyManagement.Member;
+import project1.dateMoneyManagement.model.Member;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class MemoryMemberRepositoryTest {
 

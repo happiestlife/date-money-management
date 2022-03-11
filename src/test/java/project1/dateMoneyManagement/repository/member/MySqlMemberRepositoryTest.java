@@ -3,12 +3,11 @@ package project1.dateMoneyManagement.repository.member;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.junit.jupiter.api.*;
 import org.springframework.jdbc.core.JdbcTemplate;
-import project1.dateMoneyManagement.Member;
+import project1.dateMoneyManagement.model.Member;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class MySqlMemberRepositoryTest {
 

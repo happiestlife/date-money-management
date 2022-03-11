@@ -1,4 +1,4 @@
-package project1.dateMoneyManagement;
+package project1.dateMoneyManagement.model;
 
 import lombok.Getter;
 import lombok.Setter;

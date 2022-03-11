@@ -3,7 +3,7 @@ package project1.dateMoneyManagement.service.login;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import project1.dateMoneyManagement.Member;
+import project1.dateMoneyManagement.model.Member;
 import project1.dateMoneyManagement.exception.login.*;
 import project1.dateMoneyManagement.repository.member.MemoryMemberRepository;
 

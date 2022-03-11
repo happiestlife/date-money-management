@@ -4,11 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import project1.dateMoneyManagement.Member;
+import project1.dateMoneyManagement.model.Member;
 import project1.dateMoneyManagement.repository.member.MemberRepository;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;

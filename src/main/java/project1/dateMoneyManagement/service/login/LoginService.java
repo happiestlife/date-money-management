@@ -1,6 +1,6 @@
 package project1.dateMoneyManagement.service.login;
 
-import project1.dateMoneyManagement.Member;
+import project1.dateMoneyManagement.model.Member;
 
 public interface LoginService {
     public Member login(String id, String password);

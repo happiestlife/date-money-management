@@ -1,7 +1,6 @@
 package project1.dateMoneyManagement.repository.member;
 
-import org.springframework.stereotype.Repository;
-import project1.dateMoneyManagement.Member;
+import project1.dateMoneyManagement.model.Member;
 
 import java.util.ArrayList;
 import java.util.List;
