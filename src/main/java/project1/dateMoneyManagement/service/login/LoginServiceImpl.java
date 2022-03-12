@@ -131,7 +131,7 @@ public class LoginServiceImpl implements LoginService{
         if(newPw == "" || newPw.equals(check) == false) {
             log.info("Exception occurred - updatePw");
 
-            throw new WrongMatchException();
+            throw new WrongMatchException("notMatchPasswordWithCheck");
         }
         Member findMember = memberRepository.findById(id);
         findMember.setPassword(newPw);

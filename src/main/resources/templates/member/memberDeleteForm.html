@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 탈퇴</title>
+</head>
+<body>
+    <h1 th:text="#{title}">데이트비 관리 프로그램</h1>
+    <h2 th:text="#{deleteMember}">회원 탈퇴</h2>
+    <fieldset>
+        <div th:text="#{deleteMember.insertPassword}"></div>
+        <form action="../login/loginForm.html" th:action="@{/member/delete}" th:object="${passwordCheck}" method="post">
+
+            <label for="password" th:text="#{member.password}">비밀번호</label>
+            <input type="password" id="password" name="password"
+                    th:field="*{password}" th:errorclass="password-error">
+            <div class="password-error" th:errors="*{password}"></div>
+
+            <label for="check" th:text="#{member.password}">비밀번호 확인</label>
+            <input type="password" id="check" name="check"
+                   th:field="*{check}" th:errorclass="check-error">
+            <div class="check-error" th:errors="*{check}"></div>
+
+            <div th:if="${errormsg} != null" th:text="#{|${errormsg}|}"></div>
+
+            <button onclick="location.href='../login/loginForm.html'"
+                    th:onclick="|location.href='@{/member/delete}'|"
+                    th:text="#{delete}"
+                    type="post">탈퇴하기</button>
+            <button onclick="location.href='memberDetailForm.html'"
+                    th:onclick="|location.href='@{/member}'|"
+                    th:text="#{return}"
+                    type="button">돌아가기</button>
+        </form>
+    </fieldset>
+</body>
+</html>

@@ -8,7 +8,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import project1.dateMoneyManagement.model.Member;
-import project1.dateMoneyManagement.exception.login.DuplicateIdException;
 import project1.dateMoneyManagement.service.login.LoginService;
 
 @Slf4j

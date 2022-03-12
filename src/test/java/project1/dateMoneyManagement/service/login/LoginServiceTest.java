@@ -3,6 +3,7 @@ package project1.dateMoneyManagement.service.login;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.dao.DuplicateKeyException;
 import project1.dateMoneyManagement.model.Member;
 import project1.dateMoneyManagement.exception.login.*;
 import project1.dateMoneyManagement.repository.member.MemoryMemberRepository;
@@ -62,7 +63,7 @@ public class LoginServiceTest {
 
         loginService.register(member1);
 
-        assertThrows(DuplicateIdException.class, () -> loginService.register(member2));
+        assertThrows(DuplicateKeyException.class, () -> loginService.register(member2));
     }
 
     @Test

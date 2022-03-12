@@ -30,7 +30,7 @@ public class MessageConfig implements WebMvcConfigurer{
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource ms = new ResourceBundleMessageSource();
-        ms.setBasenames("messages/messages", "messages/error");
+        ms.setBasenames("messages/messages", "messages/error", "messages/validate");
         ms.setDefaultEncoding("UTF-8");
 
         return ms;

@@ -41,6 +41,10 @@
                 th:onclick="|location.href='@{/member/edit}'|"
                 th:text="#{modifyMember}"
                 type="button">회원정보 수정</button>
+        <button onclick="location.href='memberDeleteForm.html'"
+                th:onclick="|location.href='@{/member/delete}'|"
+                th:text="#{delete}"
+                type="button">회원 탈퇴</button>
         <button onclick="location.href='../homepage.html'"
                 th:onclick="|location.href='@{/}'|"
                 th:text="#{return}"

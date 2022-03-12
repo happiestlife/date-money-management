@@ -2,6 +2,8 @@ package project1.dateMoneyManagement.service.member;
 
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+import project1.dateMoneyManagement.controller.member.PasswordCheckDTO;
+import project1.dateMoneyManagement.exception.login.WrongMatchException;
 import project1.dateMoneyManagement.model.Member;
 import project1.dateMoneyManagement.repository.member.FindLoginInfoDTO;
 import project1.dateMoneyManagement.repository.member.MemberRepository;
@@ -44,5 +46,21 @@ public class MemberServiceImpl implements MemberService{
             throw new DuplicateKeyException("duplicateEmailExist");
 
         return updateMember;
+    }
+
+    @Override
+    public boolean deleteMember(String id, PasswordCheckDTO passwordCheck) {
+        String password = passwordCheck.getPassword();
+        String check = passwordCheck.getCheck();
+        if(password.equals(check) == false)
+            throw new WrongMatchException("notMatchPasswordWithCheck");
+
+        String memberPassword = memberRepository.findById(id).getPassword();
+        if(memberPassword.equals(password) == false)
+            throw new WrongMatchException("wrongPassword");
+
+        memberRepository.remove(id);
+
+        return true;
     }
 }
