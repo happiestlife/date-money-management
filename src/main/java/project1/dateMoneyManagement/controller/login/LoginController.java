@@ -14,6 +14,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Slf4j
 @Controller
@@ -55,7 +59,12 @@ public class LoginController {
         Member loginMember = loginService.login(id, pw);
         // 로그인 성공시 아래로 코드 진행, 익셉션(WrongIdOrPassword) 발생 시 LoginExceptionController에서 에러 처리 메서드 실행
 
-        session.setAttribute(id, loginMember);
+        Set<String> loginMembers = (Set<String>) session.getAttribute("login");
+        if(loginMembers == null)
+            loginMembers = new HashSet<>();
+        loginMembers.add(loginMember.getId());
+        session.setAttribute("login", loginMembers);
+
 
         Cookie cookie = new Cookie("loginId", id);
         cookie.setMaxAge(60 * 60 * 24);
@@ -63,26 +72,6 @@ public class LoginController {
 
         return "redirect:/";
     }
-
-//    @GetMapping("/register")
-//    public String registerForm(Model model) {
-//        log.trace("registerForm");
-//        model.addAttribute("member", new Member());
-//
-//        return "login/register";
-//    }
-//
-//    @PostMapping("/register")
-//    public String register(@Validated @ModelAttribute("member") Member member, BindingResult error) {
-//        log.trace("register");
-//        if(error.hasErrors())
-//            return "login/register";
-//
-//        loginService.register(member);
-//        member.setDateConverter();
-//
-//        return "redirect:/login";
-//    }
 
     // login Exception Handler
     @ExceptionHandler(WrongIdOrPasswordException.class)
@@ -98,16 +87,4 @@ public class LoginController {
 
         return "login/loginForm";
     }
-//
-//    // register Exception Handler
-//    @ExceptionHandler(DuplicateIdException.class)
-//    public String duplicateIdError(DuplicateIdException e, Model model) {
-//        String errorMsg = e.getMessage();
-//        log.info("message : " + e.getMessage() +  ", cause : " + e.getCause());
-//
-//        model.addAttribute("errormsg", errorMsg);
-//        model.addAttribute("member", new Member());
-//
-//        return "login/register";
-//    }
 }

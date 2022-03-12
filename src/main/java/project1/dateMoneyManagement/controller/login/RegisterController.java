@@ -1,6 +1,7 @@
 package project1.dateMoneyManagement.controller.login;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,8 +43,8 @@ public class RegisterController {
     }
 
     // register Exception Handler
-    @ExceptionHandler(DuplicateIdException.class)
-    public String duplicateIdError(DuplicateIdException e, Model model) {
+    @ExceptionHandler(DuplicateKeyException.class)
+    public String duplicateIdError(DuplicateKeyException e, Model model) {
         String errorMsg = e.getMessage();
         log.info("message : " + e.getMessage() +  ", cause : " + e.getCause());
 

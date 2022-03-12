@@ -12,7 +12,7 @@
         <legend th:text="#{findIdWithEmail}">"이메일을 통해서 아이디를 찾습니다."</legend>
         <form action="showid.html" th:action="@{/login/findid}" method="post">
 
-            <label for="email" th:text="#{email}">이메일</label>
+            <label for="email" th:text="#{member.email}">이메일</label>
             <input type="text" id="email" name="email">
 
             <h5 th:if="${errormsg != null}" th:text="#{|${errormsg}|}"></h5>

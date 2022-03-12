@@ -6,10 +6,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project1.dateMoneyManagement.model.Member;
 import project1.dateMoneyManagement.repository.member.MemberRepository;
+import project1.dateMoneyManagement.service.member.MemberService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Set;
 
 
 @Slf4j
@@ -17,25 +19,28 @@ import javax.servlet.http.HttpSession;
 @RequestMapping
 public class BaseController {
 
-    private MemberRepository memberRepository;
+    private MemberService memberService;
 
-    public BaseController(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
+    public BaseController(MemberService memberService) {
+        this.memberService = memberService;
     }
 
     @GetMapping
     public String homepageForm(@CookieValue(value = "loginId", required = false) Cookie cookie,
                             HttpSession session,
                             Model model) {
-        if(cookie == null || session.getAttribute(cookie.getValue()) == null) {
+        Set<String> loginMembers = (Set<String>) session.getAttribute("login");
+        if(cookie == null || loginMembers == null || loginMembers.contains(cookie.getValue()) == false) {
             log.trace("goto LoginPage");
 
             return "redirect:/login";
         }else {
             log.trace("goto Homepage");
 
-            Member loginMember = (Member) session.getAttribute(cookie.getValue());
-            model.addAttribute("member", loginMember);
+            String id = cookie.getValue();
+            Member findMember = memberService.findMemberById(id);
+
+            model.addAttribute("nickname", findMember.getNickname());
 
             return "homepage";
         }
@@ -47,7 +52,11 @@ public class BaseController {
                          HttpServletResponse response) {
         log.trace("logout");
 
-        session.removeAttribute(cookie.getValue());
+        Member member = (Member) session.getAttribute(cookie.getValue());
+        System.out.println(member);
+
+        Set<String> loginMembers = (Set<String>) session.getAttribute("login");
+        loginMembers.remove(cookie.getValue());
 
         cookie.setValue(null);
         cookie.setMaxAge(0);

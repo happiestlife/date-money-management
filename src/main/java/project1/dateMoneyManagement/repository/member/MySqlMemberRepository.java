@@ -29,6 +29,7 @@ public class MySqlMemberRepository implements MemberRepository {
                     rs.getString("nickname"),
                     rs.getString("boyname"),
                     rs.getString("girlname"),
+                    rs.getString("regdate"),
                     null);
 
             return member;
@@ -85,9 +86,12 @@ public class MySqlMemberRepository implements MemberRepository {
                 newMember.getImage(),
                 newMember.getId());
 
-        int flag = jdbcTemplate.update(query);
-
-        return flag == 1? newMember : null;
+        try {
+            int flag = jdbcTemplate.update(query);
+        }catch (DuplicateKeyException e){
+            return null;
+        }
+        return newMember;
     }
 
     @Override

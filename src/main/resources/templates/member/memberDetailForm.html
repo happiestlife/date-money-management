@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 상세 정보</title>
+</head>
+<body>
+    <h1 th:text="#{title}">데이트비 관리 프로그램</h1>
+    <fieldset th:object="${member}">
+        <legend th:text="#{inquireMember}">회원정보 조회</legend>
+        <ul>
+            <li>
+                <label th:text="#{member.id}">아이디</label>
+                <div th:text="*{id}"></div>
+            </li>
+            <li>
+                <label th:text="#{member.email}">이메일</label>
+                <div th:text="*{email}"></div>
+            </li>
+            <li>
+                <label th:text="#{member.nickname}">커플 닉네임</label>
+                <div th:text="*{nickname}"></div>
+            </li>
+            <li>
+                <label th:text="#{member.boyName}">남자친구 이름</label>
+                <div th:text="*{boyName}"></div>
+            </li>
+            <li>
+                <label th:text="#{member.girlName}">여자친구 이름</label>
+                <div th:text="*{girlName}"></div>
+            </li>
+            <li>
+                <label th:text="#{member.regDate}">회원가입 날짜</label>
+                <div th:text="*{regDate}"></div>
+            </li>
+        </ul>
+    </fieldset>
+    <form action="../homepage.html" th:action method="post">
+        <button onclick="location.href='modifyMemberForm.html'"
+                th:onclick="|location.href='@{/member/edit}'|"
+                th:text="#{modifyMember}"
+                type="button">회원정보 수정</button>
+        <button onclick="location.href='../homepage.html'"
+                th:onclick="|location.href='@{/}'|"
+                th:text="#{return}"
+                type="button">돌아가기</button>
+    </form>
+</body>
+</html>

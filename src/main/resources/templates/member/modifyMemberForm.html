@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원정보 수정</title>
+</head>
+<body>
+    <h1 th:text="#{title}">데이트비 관리 프로그램</h1>
+    <form action="memberDetailForm.html" th:action="@{/member/edit}" th:object="${member}" method="post">
+        <fieldset>
+            <legend th:text="#{modifyMember}">회원정보 수정</legend>
+
+            <div>
+                <label for="password" th:text="#{member.password}">비밀번호 </label>
+                <input type="password" id="password" name="password"
+                       th:field="*{password}" th:errorclass="password-error">
+                <div class="password-error" th:errors="*{password}"></div>
+            </div>
+            <h5 th:text="#{passwordPattern}">"비밀번호는 영어,숫자,특수문자를 최소 한개 이상씩 포함해주세요."</h5>
+
+            <div>
+                <label for="email" th:text="#{member.email}">이메일 </label>
+                <input type="text" id="email" name="email"
+                       th:field="*{email}" th:errorclass="email-error">
+                <div class="email-error" th:errors="*{email}"></div>
+            </div>
+            <h5></h5>
+
+            <div>
+                <label for="nickname" th:text="#{member.nickname}">커플 닉네임 </label>
+                <input type="text" id="nickname" name="nickname"
+                       th:field="*{nickname}" th:errorclass="nickname-error">
+                <div class="nickname-error" th:errors="*{nickname}"></div>
+            </div>
+            <h5></h5>
+
+            <div>
+                <label for="boyName" th:text="#{member.boyName}">남자친구 이름 </label>
+                <input type="text" id="boyName" name="boyName"
+                       th:field="*{boyName}" th:errorclass="boyName-error">
+                <div class="boyName-error" th:errors="*{boyName}"></div>
+            </div>
+            <h5></h5>
+
+            <div>
+                <label for="girlName" th:text="#{member.girlName}">여자친구 이름 </label>
+                <input type="text" id="girlName" name="girlName"
+                       th:field="*{girlName}" th:errorclass="girlName-error">
+                <div class="girlName-error" th:errors="*{girlName}"></div>
+            </div>
+
+            <h5 th:if="${errormsg != null}" th:text="#{|${errormsg}|}"></h5>
+
+            <button onclick="location.href='memberDetailForm.html'"
+                    th:onclick="|location.href='@{/member/edit}'|"
+                    th:text="#{restore}"
+                    type="submit">저장하기</button>
+            <button onclick="location.href='memberDetailForm.html'"
+                    th:onclick="|location.href='@{/member}'|"
+                    th:text="#{return}"
+                    type="button">돌아가기</button>
+        </fieldset>
+    </form>
+</body>
+</html>

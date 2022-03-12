@@ -2,6 +2,7 @@ package project1.dateMoneyManagement.service.login;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import project1.dateMoneyManagement.model.Member;
@@ -56,7 +57,7 @@ public class LoginServiceImpl implements LoginService{
         if(memberRepository.insert(member) == false){
             log.info("Exception occurred - register");
 
-            throw new DuplicateIdException();
+            throw new DuplicateKeyException("duplicateIdExist");
         }
         else
             return true;

@@ -64,13 +64,24 @@ public class Member {
         this.image = image;
     }
 
+    public Member(String id, String password, String email, String nickname, String boyName, String girlName, String regDate, Files image) {
+        this.id = id;
+        this.password = password;
+        this.email = email;
+        this.nickname = nickname;
+        this.boyName = boyName;
+        this.girlName = girlName;
+        this.regDate = regDate;
+        this.image = image;
+    }
+
     public String setDateConverter() {
-        if(regDate != null || regDate == "")
+        if(regDate != null)
             return regDate;
 
         Date now = new Date();
-        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        return date.format(now);
+        return dateFormat.format(now);
     }
 }
