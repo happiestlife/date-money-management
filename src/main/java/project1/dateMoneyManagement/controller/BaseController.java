@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project1.dateMoneyManagement.model.Member;
-import project1.dateMoneyManagement.repository.member.MemberRepository;
 import project1.dateMoneyManagement.service.member.MemberService;
 
 import javax.servlet.http.Cookie;
@@ -42,7 +41,7 @@ public class BaseController {
 
             model.addAttribute("nickname", findMember.getNickname());
 
-            return "homepage";
+            return "index";
         }
     }
 

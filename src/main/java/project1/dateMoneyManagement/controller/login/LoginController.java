@@ -15,8 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 @Slf4j
@@ -33,13 +31,13 @@ public class LoginController {
     @GetMapping
     public String loginForm(Model model) {
         log.trace("loginForm");
-        model.addAttribute("login", new LoginVO());
+        model.addAttribute("login", new LoginDTO());
 
         return "login/loginForm";
     }
 
     @PostMapping
-    public String login(@Validated @ModelAttribute("login") LoginVO login,
+    public String login(@Validated @ModelAttribute("login") LoginDTO login,
                         BindingResult error,
                         Model model,
                         HttpSession session,
@@ -83,7 +81,7 @@ public class LoginController {
 
         model.addAttribute("id", id);
         model.addAttribute("errormsg", errorMsg);
-        model.addAttribute("login", new LoginVO());
+        model.addAttribute("login", new LoginDTO());
 
         return "login/loginForm";
     }

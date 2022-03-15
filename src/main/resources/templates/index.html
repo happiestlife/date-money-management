@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/calendar_style.css}" rel="stylesheet">
+    <script th:src="@{/js/calendar.js}" defer></script>
+    <title>Title</title>
+</head>
+<body>
+    <h1 th:text="#{title}">데이트비 관리 프로그램</h1>
+    <div th:text="#{homepage.greeting(${nickname})}"></div>
+    <form action="login/loginForm.html" th:action="@{/}" method="post">
+        <button onclick="location.href='member/memberDetailForm.html'"
+                th:onclick="|location.href='@{/member}'|"
+                th:name="#{inquireMember}"
+                type="button">회원정보 조회</button>
+        <button onclick="location.href='login/loginForm.html'"
+                th:onclick="|location.href='@{/}'|"
+                th:text="#{logout}"
+                type="submit">로그아웃</button>
+    </form>
+
+    <div class="calendar">
+        <div class="header">
+            <div class="year-month"></div>
+            <div class="nav">
+                <button class="nav-btn go-prev" onclick="prevMonth()">&lt;</button>
+                <button class="nav-btn go-today" onclick="goToday()">Today</button>
+                <button class="nav-btn go-next" onclick="nextMonth()">&gt;</button>
+            </div>
+        </div>
+        <div class="main">
+            <div class="days">
+                <div class="day">일</div>
+                <div class="day">월</div>
+                <div class="day">화</div>
+                <div class="day">수</div>
+                <div class="day">목</div>
+                <div class="day">금</div>
+                <div class="day">토</div>
+            </div>
+            <div class="dates"></div>
+        </div>
+    </div>
+    <script src="calendar.js"></script>
+</body>
+</html>

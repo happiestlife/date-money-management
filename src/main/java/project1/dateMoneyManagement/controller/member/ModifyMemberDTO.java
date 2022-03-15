@@ -5,14 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.nio.file.Files;
 
 @Setter @Getter
 @AllArgsConstructor
-public class ModifyMemberVO {
+public class ModifyMemberDTO {
 
     @Size(min = 8, max = 30)
     @Pattern(regexp = "^.*(?=^.{8,30}$)(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$")

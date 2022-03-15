@@ -3,13 +3,16 @@ package project1.dateMoneyManagement.controller.login;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import project1.dateMoneyManagement.controller.member.PasswordCheckDTO;
 import project1.dateMoneyManagement.exception.login.WrongAuthCodeException;
 import project1.dateMoneyManagement.exception.login.WrongMatchException;
 import project1.dateMoneyManagement.service.login.LoginService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.NoSuchElementException;
 
 @Slf4j
@@ -42,7 +45,7 @@ public class FindPwController {
         loginService.sendAuthCode(id, email);
 
         Cookie cookie = new Cookie("id", id);
-        cookie.setMaxAge(60 * 10);
+        cookie.setMaxAge(60 * 2);
         response.addCookie(cookie);
 
         return "redirect:/login/find/pw/verifycode";
@@ -86,12 +89,16 @@ public class FindPwController {
 
     @PostMapping("/newpw")
     public String newPassword(@CookieValue(value = "id") Cookie idCookie,
-                              @CookieValue(value = "auth") Cookie authCookie,
-                              @RequestParam String pw,
-                              @RequestParam String check,
+                              @Valid @ModelAttribute("passwordCheck") PasswordCheckDTO passwordCheck,
+                              BindingResult error,
                               HttpServletResponse response) {
         log.trace("Find password - update new password");
+        if(error.hasErrors())
+            return "login/find/pw/newpwForm";
+
         String id = idCookie.getValue();
+        String pw = passwordCheck.getPassword();
+        String check = passwordCheck.getCheck();
 
         loginService.updatePw(id, pw, check);
 

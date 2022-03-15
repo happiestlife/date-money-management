@@ -7,7 +7,7 @@
 <body>
     <h1 th:text="#{title}">데이트비 관리 프로그램</h1>
     <div>
-        <form action="../homepage.html" th:object="${login}" th:action method="post">
+        <form action="../index.html" th:object="${login}" th:action method="post">
             <fieldset>
                 <legend th:text="#{login}">로그인</legend>
                 <ul>
@@ -28,7 +28,7 @@
                 <h5 th:if="${errormsg != null}" th:text="#{|${errormsg}|}"></h5>
 
             </fieldset>
-            <button onclick="location.href='../homepage.html'"
+            <button onclick="location.href='../index.html'"
                     th:onclick="|location.href='@{/login}'|"
                     th:text="#{login}"
                     type="submit">로그인</button>

@@ -36,7 +36,7 @@
             </li>
         </ul>
     </fieldset>
-    <form action="../homepage.html" th:action method="post">
+    <form action="../index.html" th:action method="post">
         <button onclick="location.href='modifyMemberForm.html'"
                 th:onclick="|location.href='@{/member/edit}'|"
                 th:text="#{modifyMember}"
@@ -45,7 +45,7 @@
                 th:onclick="|location.href='@{/member/delete}'|"
                 th:text="#{delete}"
                 type="button">회원 탈퇴</button>
-        <button onclick="location.href='../homepage.html'"
+        <button onclick="location.href='../index.html'"
                 th:onclick="|location.href='@{/}'|"
                 th:text="#{return}"
                 type="button">돌아가기</button>

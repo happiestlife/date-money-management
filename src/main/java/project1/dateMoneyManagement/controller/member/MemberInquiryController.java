@@ -44,7 +44,7 @@ public class MemberInquiryController {
     }
 
     @PostMapping("/edit")
-    public String editMemberInfo(@CookieValue(value = "loginId") Cookie cookie, @Validated @ModelAttribute("member") ModifyMemberVO member, BindingResult error) {
+    public String editMemberInfo(@CookieValue(value = "loginId") Cookie cookie, @Validated @ModelAttribute("member") ModifyMemberDTO member, BindingResult error) {
         if(error.hasErrors())
             return "member/modifyMemberForm";
 
