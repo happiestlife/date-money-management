@@ -2,6 +2,7 @@ package project1.dateMoneyManagement.repository.member;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.junit.jupiter.api.*;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import project1.dateMoneyManagement.model.Member;
 
@@ -21,14 +22,14 @@ class MySqlMemberRepositoryTest {
     static public void init() {
         DataSource ds = new DataSource();
         ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        ds.setUrl("jdbc:mysql://localhost:3306/date_money_management_db_test");
+        ds.setUrl("jdbc:mysql://localhost:3306/dmmdb");
         ds.setUsername("root");
         ds.setPassword("@dlgustjd1234");
 
         repository = new MySqlMemberRepository(new JdbcTemplate(ds));
     }
 
-    @AfterAll
+//    @AfterAll
     static public void deleteAll() {
         repository.removeAll();
     }

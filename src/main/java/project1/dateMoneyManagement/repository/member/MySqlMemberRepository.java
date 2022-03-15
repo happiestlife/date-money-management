@@ -65,33 +65,37 @@ public class MySqlMemberRepository implements MemberRepository {
 
     @Override
     public Member update(String memberId, Member newMember) {
-        String query = "UPDATE %s SET " +
-                "password = '%s', " +
-                "email = '%s', " +
-                "nickname = '%s',  " +
-                "boyname = '%s', " +
-                "girlname = '%s', " +
-                "regdate = '%s', " +
-                "image = '%s' " +
-                "WHERE id = '%S'";
-
-        query = String.format(query,
-                table,
-                newMember.getPassword(),
-                newMember.getEmail(),
-                newMember.getNickname(),
-                newMember.getBoyName(),
-                newMember.getGirlName(),
-                newMember.getRegDate(),
-                newMember.getImage(),
-                newMember.getId());
-
         try {
-            int flag = jdbcTemplate.update(query);
+            if(findById(memberId) == null)
+                return null;
+
+            String query = "UPDATE %s SET " +
+                    "password = '%s', " +
+                    "email = '%s', " +
+                    "nickname = '%s',  " +
+                    "boyname = '%s', " +
+                    "girlname = '%s', " +
+                    "regdate = '%s', " +
+                    "image = '%s' " +
+                    "WHERE id = '%s'";
+
+            query = String.format(query,
+                    table,
+                    newMember.getPassword(),
+                    newMember.getEmail(),
+                    newMember.getNickname(),
+                    newMember.getBoyName(),
+                    newMember.getGirlName(),
+                    newMember.getRegDate(),
+                    newMember.getImage(),
+                    memberId);
+
+            jdbcTemplate.update(query);
+
+            return newMember;
         }catch (DuplicateKeyException e){
             return null;
         }
-        return newMember;
     }
 
     @Override

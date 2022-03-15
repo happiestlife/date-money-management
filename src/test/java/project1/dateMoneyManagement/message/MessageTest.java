@@ -16,7 +16,7 @@ public class MessageTest {
     
     @Test
     public void KO_test() {
-        String greet = ms.getMessage("greeting", new String[]{"치킨맨"}, Locale.KOREA);
+        String greet = ms.getMessage("homepage.greeting", new String[]{"치킨맨"}, Locale.KOREAN);
         String str = "치킨맨님, 반갑습니다.";
         Assertions.assertThat(greet).isEqualTo(str);
     }

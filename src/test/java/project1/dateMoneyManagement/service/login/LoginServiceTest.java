@@ -3,6 +3,7 @@ package project1.dateMoneyManagement.service.login;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.dao.DuplicateKeyException;
 import project1.dateMoneyManagement.model.Member;
 import project1.dateMoneyManagement.exception.login.*;
@@ -64,29 +65,6 @@ public class LoginServiceTest {
         loginService.register(member1);
 
         assertThrows(DuplicateKeyException.class, () -> loginService.register(member2));
-    }
-
-    @Test
-    public void register_FailByNotEnoughData(){
-        Member noId = new Member("", "1", "test",
-                "test",  "test", "test");
-        Member noPw = new Member("test1", "", "test",
-                "test", "test", "test");
-        Member noEmail = new Member("test2", "1", "",
-                "test",  "test", "test");
-        Member noNickname = new Member("test3", "1", "test",
-                "",  "test", "test");
-        Member noBoyName= new Member("test4", "1", "test",
-                "test", "", "test");
-        Member noGirlName = new Member("test5", "1", "test",
-                "test",  "test", "");
-
-        assertThrows(NoEnoughInfoException.class, () -> loginService.register(noId));
-        assertThrows(NoEnoughInfoException.class, () -> loginService.register(noPw));
-        assertThrows(NoEnoughInfoException.class, () -> loginService.register(noEmail));
-        assertThrows(NoEnoughInfoException.class, () -> loginService.register(noNickname));
-        assertThrows(NoEnoughInfoException.class, () -> loginService.register(noBoyName));
-        assertThrows(NoEnoughInfoException.class, () -> loginService.register(noNickname));
     }
 
     @Test
