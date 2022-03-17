@@ -1,10 +1,12 @@
 package project1.dateMoneyManagement.controller.login;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 
-@Data
+@Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class LoginDTO {
     @NotBlank
     private String id;

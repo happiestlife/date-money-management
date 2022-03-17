@@ -10,12 +10,10 @@ import project1.dateMoneyManagement.model.Member;
 import project1.dateMoneyManagement.exception.login.WrongIdOrPasswordException;
 import project1.dateMoneyManagement.service.login.LoginService;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.HashSet;
-import java.util.Set;
+import java.security.NoSuchAlgorithmException;
 
 @Slf4j
 @Controller
@@ -23,6 +21,7 @@ import java.util.Set;
 public class LoginController {
 
     private final LoginService loginService;
+    private final String LOGIN_SESSION = "login";
 
     public LoginController(LoginService loginService) {
         this.loginService = loginService;
@@ -41,7 +40,7 @@ public class LoginController {
                         BindingResult error,
                         Model model,
                         HttpSession session,
-                        HttpServletResponse response) {
+                        HttpServletResponse response) throws NoSuchAlgorithmException {
         if (error.hasErrors()) {
             if(login != null && login.getId() != null)
                 model.addAttribute("id", login.getId());
@@ -57,16 +56,11 @@ public class LoginController {
         Member loginMember = loginService.login(id, pw);
         // 로그인 성공시 아래로 코드 진행, 익셉션(WrongIdOrPassword) 발생 시 LoginExceptionController에서 에러 처리 메서드 실행
 
-        Set<String> loginMembers = (Set<String>) session.getAttribute("login");
-        if(loginMembers == null)
-            loginMembers = new HashSet<>();
-        loginMembers.add(loginMember.getId());
-        session.setAttribute("login", loginMembers);
+//        MessageDigest md = MessageDigest.getInstance("SHA-512");
+//        md.update(loginMember.getId().getBytes());
+//        String hashKey = String.format("%064x", md.digest());
 
-
-        Cookie cookie = new Cookie("loginId", id);
-        cookie.setMaxAge(60 * 60 * 24);
-        response.addCookie(cookie);
+        session.setAttribute(LOGIN_SESSION, loginMember.getId());
 
         return "redirect:/";
     }

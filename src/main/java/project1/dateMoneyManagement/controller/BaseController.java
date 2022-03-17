@@ -7,10 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import project1.dateMoneyManagement.model.Member;
 import project1.dateMoneyManagement.service.member.MemberService;
 
-import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Set;
 
 
 @Slf4j
@@ -25,20 +24,19 @@ public class BaseController {
     }
 
     @GetMapping
-    public String homepageForm(@CookieValue(value = "loginId", required = false) Cookie cookie,
-                            HttpSession session,
+    public String homepageForm(HttpServletRequest request,
                             Model model) {
-        Set<String> loginMembers = (Set<String>) session.getAttribute("login");
-        if(cookie == null || loginMembers == null || loginMembers.contains(cookie.getValue()) == false) {
+        HttpSession session = request.getSession(false);
+        if(session == null) {
             log.trace("goto LoginPage");
 
             return "redirect:/login";
         }else {
             log.trace("goto Homepage");
 
-            String id = cookie.getValue();
+            String id = (String) session.getAttribute(SessionKeys.LOGIN_SESSION);
+            log.info(id);
             Member findMember = memberService.findMemberById(id);
-
             model.addAttribute("nickname", findMember.getNickname());
 
             return "index";
@@ -46,20 +44,11 @@ public class BaseController {
     }
 
     @PostMapping
-    public String logout(HttpSession session,
-                         @CookieValue(value = "loginId") Cookie cookie,
+    public String logout(HttpServletRequest request,
                          HttpServletResponse response) {
         log.trace("logout");
 
-        Member member = (Member) session.getAttribute(cookie.getValue());
-        System.out.println(member);
-
-        Set<String> loginMembers = (Set<String>) session.getAttribute("login");
-        loginMembers.remove(cookie.getValue());
-
-        cookie.setValue(null);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
+        request.getSession(false).invalidate();
 
         return "redirect:/";
     }

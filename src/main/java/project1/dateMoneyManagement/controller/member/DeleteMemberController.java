@@ -6,10 +6,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import project1.dateMoneyManagement.controller.SessionKeys;
 import project1.dateMoneyManagement.exception.login.WrongMatchException;
 import project1.dateMoneyManagement.service.member.MemberService;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Set;
@@ -33,7 +35,7 @@ public class DeleteMemberController {
     }
 
     @PostMapping
-    public String leaveMember(@CookieValue(value = "loginId") Cookie cookie,
+    public String leaveMember(HttpServletRequest request,
                               @Validated @ModelAttribute("passwordCheck") PasswordCheckDTO passwordCheck,
                               BindingResult error,
                               HttpSession session,
@@ -41,7 +43,7 @@ public class DeleteMemberController {
         if(error.hasErrors())
             return "member/memberDeleteForm";
 
-        String id = cookie.getValue();
+        String id = (String) request.getSession().getAttribute(SessionKeys.LOGIN_SESSION);
         memberService.deleteMember(id, passwordCheck);
 
         Set<String> loginMembers = (Set<String>) session.getAttribute("login");
