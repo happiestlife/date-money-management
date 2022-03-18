@@ -56,7 +56,6 @@ public class DeleteMemberController {
 
         return "redirect:/";
     }
-
     @ExceptionHandler(WrongMatchException.class)
     public String wrongPasswordOrNotMatch(WrongMatchException e, Model model) {
         String errorMsg = e.getMessage();
@@ -68,5 +67,4 @@ public class DeleteMemberController {
 
         return "member/memberDeleteForm";
     }
-
 }
