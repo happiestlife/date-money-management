@@ -14,7 +14,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(afterLoginInterceptor())
                 .order(1)
                 .addPathPatterns("/member/**")
-                .addPathPatterns("/");
+                .addPathPatterns("/")
+                .excludePathPatterns("/login");
     }
 
     @Bean

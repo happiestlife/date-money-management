@@ -8,24 +8,23 @@
 <body>
     <h1 th:text="#{title}">데이트비 관리 프로그램</h1>
     <h2 th:text="#{findId}">아이디 찾기</h2>
-    <fieldset>
-        <legend th:text="#{findIdWithEmail}">"이메일을 통해서 아이디를 찾습니다."</legend>
-        <form action="showid.html" th:action="@{/login/findid}" method="post">
+    <form action="showid.html" th:action="@{/login/findid}" method="post">
+        <fieldset style="width:250px;">
+            <p th:text="#{findIdWithEmail}">"이메일을 통해서 아이디를 찾습니다."</p>
 
             <label for="email" th:text="#{member.email}">이메일</label>
             <input type="text" id="email" name="email">
 
             <h5 th:if="${errormsg != null}" th:text="#{|${errormsg}|}"></h5>
 <!--            <div th:if="${errormsg != null and errormsg.equals('noIdCorrespondToEmail')}" th:text="#{noIdCorrespondToEmail}"></div>-->
-
-            <button onclick="location.href='showId.html'"
-                    th:onclick="|location.href='@{/login/findid}'|"
-                    th:text="#{findId}"
-                    type="submit">아이디 찾기</button>
-            <button onclick="location.href='../../loginForm.html'"
-                    th:onclick="|location.href='@{/login}'|"
-                    th:text="#{return}" type="button">돌아가기</button>
-        </form>
-    </fieldset>
+        </fieldset>
+        <button onclick="location.href='showId.html'"
+                th:onclick="|location.href='@{/login/findid}'|"
+                th:text="#{findId}"
+                type="submit">아이디 찾기</button>
+        <button onclick="location.href='../../loginForm.html'"
+                th:onclick="|location.href='@{/login}'|"
+                th:text="#{return}" type="button">돌아가기</button>
+    </form>
 </body>
 </html>

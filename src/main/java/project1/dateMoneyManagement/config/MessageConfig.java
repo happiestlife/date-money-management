@@ -1,6 +1,5 @@
 package project1.dateMoneyManagement.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +18,7 @@ public class MessageConfig implements WebMvcConfigurer{
     @Bean
     public LocaleResolver localeResolver() {
         CookieLocaleResolver resolver = new CookieLocaleResolver();
+
         resolver.setCookieName("lang");
         resolver.setCookieMaxAge(-1);
         resolver.setCookiePath("/");
@@ -30,6 +30,7 @@ public class MessageConfig implements WebMvcConfigurer{
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource ms = new ResourceBundleMessageSource();
+
         ms.setBasenames("messages/messages", "messages/error", "messages/validate");
         ms.setDefaultEncoding("UTF-8");
 
