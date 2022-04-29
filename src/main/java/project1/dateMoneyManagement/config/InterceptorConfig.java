@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import project1.dateMoneyManagement.controller.member.interceptor.AfterLoginInterceptor;
+import project1.dateMoneyManagement.config.interceptor.AfterLoginInterceptor;
 
 @Configuration
 public class InterceptorConfig implements WebMvcConfigurer {
@@ -13,9 +13,9 @@ public class InterceptorConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(afterLoginInterceptor())
                 .order(1)
-                .addPathPatterns("/member/**")
-                .addPathPatterns("/")
-                .excludePathPatterns("/login");
+                .addPathPatterns("/**")
+                .excludePathPatterns("/login/**")
+                .excludePathPatterns("/find/**");
     }
 
     @Bean

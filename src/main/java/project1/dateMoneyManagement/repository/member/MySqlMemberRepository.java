@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import project1.dateMoneyManagement.DTO.login.FindLoginInfoDTO;
 import project1.dateMoneyManagement.model.Member;
 
 import javax.annotation.PostConstruct;
@@ -75,7 +76,6 @@ public class MySqlMemberRepository implements MemberRepository {
                     "nickname = '%s',  " +
                     "boyname = '%s', " +
                     "girlname = '%s', " +
-                    "regdate = '%s', " +
                     "image = '%s' " +
                     "WHERE id = '%s'";
 
@@ -86,7 +86,6 @@ public class MySqlMemberRepository implements MemberRepository {
                     newMember.getNickname(),
                     newMember.getBoyName(),
                     newMember.getGirlName(),
-                    newMember.getRegDate(),
                     newMember.getImage(),
                     memberId);
 

@@ -1,6 +1,6 @@
 package project1.dateMoneyManagement.service.member;
 
-import project1.dateMoneyManagement.controller.member.PasswordCheckDTO;
+import project1.dateMoneyManagement.DTO.member.PasswordCheckDTO;
 import project1.dateMoneyManagement.model.Member;
 
 public interface MemberService {

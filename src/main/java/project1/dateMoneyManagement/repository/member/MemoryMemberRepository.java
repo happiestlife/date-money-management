@@ -1,5 +1,6 @@
 package project1.dateMoneyManagement.repository.member;
 
+import project1.dateMoneyManagement.DTO.login.FindLoginInfoDTO;
 import project1.dateMoneyManagement.model.Member;
 
 import java.util.ArrayList;

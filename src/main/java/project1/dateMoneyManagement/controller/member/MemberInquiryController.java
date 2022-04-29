@@ -7,12 +7,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import project1.dateMoneyManagement.DTO.member.ModifyMemberDTO;
 import project1.dateMoneyManagement.controller.SessionKeys;
 import project1.dateMoneyManagement.model.Member;
 import project1.dateMoneyManagement.service.member.MemberService;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Slf4j
 @Configuration
@@ -26,8 +27,8 @@ public class MemberInquiryController {
     }
 
     @GetMapping
-    public String detailMemberInfoForm(HttpServletRequest request, Model model) {
-        String id = (String) request.getSession().getAttribute(SessionKeys.LOGIN_SESSION);
+    public String detailMemberInfoForm(HttpSession session, Model model) {
+        String id = (String) session.getAttribute(SessionKeys.LOGIN_SESSION);
 
         Member findMember = memberService.findMemberById(id);
 
@@ -47,14 +48,15 @@ public class MemberInquiryController {
     }
 
     @PostMapping("/edit")
-    public String editMemberInfo(HttpServletRequest request,
+    public String editMemberInfo(HttpSession session,
                                  @Validated @ModelAttribute("member") ModifyMemberDTO member,
                                  BindingResult error) {
         if(error.hasErrors())
             return "member/modifyMemberForm";
 
-        String id = (String) request.getSession().getAttribute(SessionKeys.LOGIN_SESSION);
+        String id = (String) session.getAttribute(SessionKeys.LOGIN_SESSION);
         Member loginMember = memberService.findMemberById(id);
+
         loginMember.setPassword(member.getPassword());
         loginMember.setEmail(member.getEmail());
         loginMember.setNickname(member.getNickname());

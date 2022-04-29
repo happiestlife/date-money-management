@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import project1.dateMoneyManagement.DTO.member.PasswordCheckDTO;
 import project1.dateMoneyManagement.controller.SessionKeys;
 import project1.dateMoneyManagement.exception.login.WrongMatchException;
 import project1.dateMoneyManagement.service.member.MemberService;
@@ -46,16 +47,11 @@ public class DeleteMemberController {
         String id = (String) request.getSession().getAttribute(SessionKeys.LOGIN_SESSION);
         memberService.deleteMember(id, passwordCheck);
 
-        Set<String> loginMembers = (Set<String>) session.getAttribute("login");
-        loginMembers.remove(id);
-        session.setAttribute("login", loginMembers);
+        session.invalidate();
 
-        Cookie loginCookie = new Cookie("loginId", null);
-        loginCookie.setMaxAge(0);
-        response.addCookie(loginCookie);
-
-        return "redirect:/";
+        return "redirect:/login";
     }
+
     @ExceptionHandler(WrongMatchException.class)
     public String wrongPasswordOrNotMatch(WrongMatchException e, Model model) {
         String errorMsg = e.getMessage();

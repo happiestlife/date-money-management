@@ -8,7 +8,7 @@
 <body>
     <h1 th:text="#{title}">데이트비 관리 프로그램</h1>
     <h2 th:text="#{findPassword}">비밀번호 찾기</h2>
-    <form action="verifycode.html" th:action="@{/login/find/pw}" method="post">
+    <form action="verifycode.html" th:action="@{/find/pw}" method="post">
         <fieldset style="width:300px;">
             <p th:text="#{findPwWithIdAndEmail}">"비밀번호를 찾기 위해 이메일과 아이디를 입력해주세요."</p>
 

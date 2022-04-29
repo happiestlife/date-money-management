@@ -1,4 +1,4 @@
-package project1.dateMoneyManagement.controller.member.interceptor;
+package project1.dateMoneyManagement.config.interceptor;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import project1.dateMoneyManagement.controller.SessionKeys;

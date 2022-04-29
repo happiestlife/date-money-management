@@ -2,10 +2,10 @@ package project1.dateMoneyManagement.service.member;
 
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
-import project1.dateMoneyManagement.controller.member.PasswordCheckDTO;
+import project1.dateMoneyManagement.DTO.member.PasswordCheckDTO;
 import project1.dateMoneyManagement.exception.login.WrongMatchException;
 import project1.dateMoneyManagement.model.Member;
-import project1.dateMoneyManagement.repository.member.FindLoginInfoDTO;
+import project1.dateMoneyManagement.DTO.login.FindLoginInfoDTO;
 import project1.dateMoneyManagement.repository.member.MemberRepository;
 
 import java.util.NoSuchElementException;

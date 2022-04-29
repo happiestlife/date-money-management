@@ -1,4 +1,4 @@
-package project1.dateMoneyManagement.controller.member;
+package project1.dateMoneyManagement.DTO.member;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

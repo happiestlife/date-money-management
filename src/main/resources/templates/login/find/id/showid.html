@@ -17,7 +17,7 @@
 
     <form method="post">
         <button onclick="location.href='../pw/findpw.html'"
-                th:onclick="|location.href='@{/login/find/pw}'|"
+                th:onclick="|location.href='@{/find/pw}'|"
                 th:value="${email}"
                 th:text="#{findPassword}"
                 type="button">비밀번호 찾기</button>

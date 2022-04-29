@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
 
 @Slf4j
 @Controller
-@RequestMapping("/login/findid")
+@RequestMapping("/find/id")
 public class FindIdController {
 
     private final LoginService loginService;

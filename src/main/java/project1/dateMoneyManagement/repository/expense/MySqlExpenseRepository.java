@@ -6,6 +6,7 @@ import project1.dateMoneyManagement.model.Expense;
 
 import java.sql.ResultSet;
 import java.util.List;
+
 @Repository
 public class MySqlExpenseRepository implements ExpenseRepository{
 

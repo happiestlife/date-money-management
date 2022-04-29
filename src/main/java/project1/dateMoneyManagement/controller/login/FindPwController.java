@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import project1.dateMoneyManagement.controller.member.PasswordCheckDTO;
+import project1.dateMoneyManagement.DTO.member.PasswordCheckDTO;
 import project1.dateMoneyManagement.exception.login.WrongAuthCodeException;
 import project1.dateMoneyManagement.exception.login.WrongMatchException;
 import project1.dateMoneyManagement.service.login.LoginService;
@@ -17,7 +17,7 @@ import java.util.NoSuchElementException;
 
 @Slf4j
 @Controller
-@RequestMapping("/login/find/pw")
+@RequestMapping("/find/pw")
 public class FindPwController {
 
     private final LoginService loginService;
@@ -48,7 +48,7 @@ public class FindPwController {
         cookie.setMaxAge(60 * 2);
         response.addCookie(cookie);
 
-        return "redirect:/login/find/pw/verifycode";
+        return "redirect:/find/pw/verifycode";
     }
 
     @GetMapping("/verifycode")
@@ -56,7 +56,7 @@ public class FindPwController {
         log.trace("Find password redirect - verify code Form");
 
         if(cookie == null)
-            return "redirect:/login/find/pw";
+            return "redirect:/find/pw";
 
         return "login/find/pw/verifycode";
     }
@@ -74,15 +74,17 @@ public class FindPwController {
         c.setMaxAge(60 * 2);
         response.addCookie(c);
 
-        return "redirect:/login/find/pw/newpw";
+        return "redirect:/find/pw/newpw";
     }
 
     @GetMapping("/newpw")
-    public String returnToFirstFindPasswordForm(@CookieValue(value = "auth", required = false) Cookie cookie) {
+    public String returnToFirstFindPasswordForm(@CookieValue(value = "auth", required = false) Cookie cookie, Model model) {
         log.trace("Find password redirect - new password Form");
 
         if(cookie == null)
-            return "redirect:/login/find/pw";
+            return "redirect:/find/pw";
+
+        model.addAttribute("passwordCheck", new PasswordCheckDTO());
 
         return "login/find/pw/newpwForm";
     }

@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import project1.dateMoneyManagement.model.Member;
 import project1.dateMoneyManagement.exception.login.*;
-import project1.dateMoneyManagement.repository.member.FindLoginInfoDTO;
+import project1.dateMoneyManagement.DTO.login.FindLoginInfoDTO;
 import project1.dateMoneyManagement.repository.member.MemberRepository;
 
 import java.util.*;

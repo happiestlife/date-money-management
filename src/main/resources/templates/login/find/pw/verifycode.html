@@ -8,7 +8,7 @@
 <body>
     <h1 th:text="#{title}">데이트비 관리 프로그램</h1>
     <h2 th:text="#{findPassword}">비밀번호 찾기</h2>
-    <form action="newpwForm.html" th:action="@{/login/find/pw/verifycode}" method="post">
+    <form action="newpwForm.html" th:action="@{/find/pw/verifycode}" method="post">
         <fieldset style="width:250px;">
             <p th:text="#{insertAuthCode}">"이메일로 전송된 코드를 입력하세요."</p>
 
@@ -22,7 +22,7 @@
                 th:text="#{confirm}"
                 type="submit">확인</button>
         <button onclick="location.href='verifycode.html'"
-                th:onclick="|location.href='@{/login/find/pw/sendcode}'|"
+                th:onclick="|location.href='@{/find/pw/sendcode}'|"
                 th:text="#{resendCode}"
                 type="button">메일 다시 전송</button>
         <button onclick="location.href='../../loginForm.html'"
