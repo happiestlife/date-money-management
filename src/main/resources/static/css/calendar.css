@@ -1,0 +1,31 @@
+.calendar{
+    width: 700px;
+    border : forestgreen 3px solid;
+    display : block;
+}
+
+.dayOfWeek{
+    float:left;
+    width: calc(100% / 7);
+    text-align: center;
+    border-bottom: 2px solid black;
+    border-left: 2px solid black;
+}
+.dayText{
+    font-size : 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.eachDay {
+    width : calc(100% / 7);
+    height : 100px;
+    background-color : cornsilk;
+    border-collapse: collapse;
+    border-color: black;
+    border-width: 3px;
+    float:left;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    text-align: center;
+}

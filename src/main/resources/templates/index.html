@@ -3,9 +3,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png"  href="favicon.png"/>
     <link th:href="@{/css/calendar_style.css}" rel="stylesheet">
+    <link th:href="@{/css/calendar.css}" rel="stylesheet">
     <script th:src="@{/js/calendar.js}" defer></script>
-    <title>Title</title>
+    <title>메인 페이지</title>
 </head>
 <body>
     <h1 th:text="#{title}">데이트비 관리 프로그램</h1>
@@ -20,6 +22,30 @@
                 th:text="#{logout}"
                 type="submit">로그아웃</button>
     </form>
+
+    <h3 th:text="${calendarDTO.year}"></h3>
+    <h1 th:text="${calendarDTO.month}"></h1>
+    <div class="calendar">
+        <div class="dayOfWeek">일</div>
+        <div class="dayOfWeek">월</div>
+        <div class="dayOfWeek">화</div>
+        <div class="dayOfWeek">수</div>
+        <div class="dayOfWeek">목</div>
+        <div class="dayOfWeek">금</div>
+        <div class="dayOfWeek">토</div><br>
+        <div class="eachDay" th:each="num : ${#numbers.sequence(1, calendarDTO.startDay )}">
+            -
+        </div>
+        <div th:each="dayInfo : ${calendarDTO.expenses}">
+            <div class="eachDay">
+                <div class="dayText" th:text="${dayInfo.day}"></div>
+                <th:block th:if="${dayInfo.cost} != null">
+                    <div th:text="${dayInfo.cost}"></div><br>
+                    <div th:text="${dayInfo.memo}"></div><br>
+                </th:block>
+            </div>
+        </div>
+    </div>
 
     <div class="calendar">
         <div class="header">
@@ -43,6 +69,5 @@
             <div class="dates"></div>
         </div>
     </div>
-    <script src="calendar.js"></script>
 </body>
 </html>

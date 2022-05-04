@@ -7,15 +7,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import project1.dateMoneyManagement.DTO.member.PasswordCheckDTO;
-import project1.dateMoneyManagement.controller.SessionKeys;
+import project1.dateMoneyManagement.common.SessionKeys;
 import project1.dateMoneyManagement.exception.login.WrongMatchException;
 import project1.dateMoneyManagement.service.member.MemberService;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Set;
 
 @Slf4j
 @Configuration

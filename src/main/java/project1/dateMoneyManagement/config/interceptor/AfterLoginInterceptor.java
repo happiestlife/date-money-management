@@ -1,7 +1,7 @@
 package project1.dateMoneyManagement.config.interceptor;
 
 import org.springframework.web.servlet.HandlerInterceptor;
-import project1.dateMoneyManagement.controller.SessionKeys;
+import project1.dateMoneyManagement.common.SessionKeys;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

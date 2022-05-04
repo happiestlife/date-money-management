@@ -1,15 +1,13 @@
 package project1.dateMoneyManagement.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter @Setter
-@AllArgsConstructor
+@Data
 public class Expense {
-
-    private String id;
-    private String Date;
-    private Long cost;
-    private String memo;
+    private final String id;
+    private final int year;
+    private final int month;
+    private final int day;
+    private final Long cost;
+    private final String memo;
 }

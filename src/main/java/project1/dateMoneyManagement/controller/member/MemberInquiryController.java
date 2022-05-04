@@ -8,11 +8,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import project1.dateMoneyManagement.DTO.member.ModifyMemberDTO;
-import project1.dateMoneyManagement.controller.SessionKeys;
+import project1.dateMoneyManagement.common.SessionKeys;
 import project1.dateMoneyManagement.model.Member;
 import project1.dateMoneyManagement.service.member.MemberService;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Slf4j

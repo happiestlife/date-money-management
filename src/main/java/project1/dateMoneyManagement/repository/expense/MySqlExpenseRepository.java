@@ -18,18 +18,16 @@ public class MySqlExpenseRepository implements ExpenseRepository{
     }
 
     @Override
-    public List<Expense> getMonthData(int year, int month) {
-        String dateFormat = "%s-%s-01";
-        String startDate = String.format(dateFormat, year, month);
-        String endDate = String.format(dateFormat, year, month+1);
-
-        String query = "SELECT money FROM %s WHERE date >= str_to_date('%s', '%Y-%m-%d') AND date < str_to_date('%s', '%Y-%m-%d');";
-        query = String.format(query, table, startDate, endDate);
-
+    public List<Expense> getMonthData(int year, int month, String id) {
+        String query = "SELECT * FROM %s WHERE id = '%s' AND year = %s AND month = %s";
+        query = String.format(query, table, id, year, month);
+        System.out.println(year + query);
         return jdbcTemplate.query(query, (ResultSet rs, int rowNum) -> {
             Expense expense = new Expense(
                     rs.getString("id"),
-                    rs.getString("date"),
+                    rs.getInt("year"),
+                    rs.getInt("month"),
+                    rs.getInt("day"),
                     rs.getLong("cost"),
                     rs.getString("memo")
             );
