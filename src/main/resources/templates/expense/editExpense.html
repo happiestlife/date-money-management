@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>지출 수정</title>
+</head>
+<body>
+    <h1 th:text="#{title}">데이트비 관리 프로그램</h1>
+    <h3 th:text="|${detailExpense.date.year}년 ${detailExpense.date.month}월 ${detailExpense.date.day}일 비용|"></h3>
+    <hr>
+    <form th:action="@{/data}" method="post" class="inputBox">
+        <label for="cost">비용 </label><input id="cost" th:name="cost" th:placeholder="|${detailExpense.cost}원|"><br><br>
+        <label for="memo">지출내용 </label><input id="memo" th:name="memo" th:placeholder="${detailExpense.memo}"><br><br>
+        <input type="hidden" th:name="year" th:value="${detailExpense.date.year}">
+        <input type="hidden" th:name="month" th:value="${detailExpense.date.month}">
+        <input type="hidden" th:name="day" th:value="${detailExpense.date.day}">
+        <input type="hidden" th:name="id" th:value="${detailExpense.id}">
+        <input type="submit" value="저장하기" >
+    </form>
+</body>
+</html>

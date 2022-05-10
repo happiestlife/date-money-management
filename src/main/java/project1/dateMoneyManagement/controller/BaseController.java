@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project1.dateMoneyManagement.DTO.expense.CalendarDTO;
 import project1.dateMoneyManagement.common.SessionKeys;
-import project1.dateMoneyManagement.model.Expense;
 import project1.dateMoneyManagement.model.Member;
 import project1.dateMoneyManagement.service.expense.ExpenseService;
 import project1.dateMoneyManagement.service.member.MemberService;
@@ -14,7 +13,6 @@ import project1.dateMoneyManagement.service.member.MemberService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 
 @Slf4j
@@ -31,14 +29,8 @@ public class BaseController {
     }
 
     @GetMapping
-    public String homepageForm(HttpServletRequest request,
+    public String homepageForm(HttpSession session,
                             Model model) {
-        HttpSession session = request.getSession(false);
-        if(session == null) {
-            log.trace("goto LoginPage");
-
-            return "redirect:/login";
-        }else {
             log.trace("goto Homepage");
 
             String id = (String) session.getAttribute(SessionKeys.LOGIN_SESSION);
@@ -49,7 +41,6 @@ public class BaseController {
             model.addAttribute("calendarDTO", calendarDTO);
 
             return "index";
-        }
     }
 
     @PostMapping
@@ -61,4 +52,5 @@ public class BaseController {
 
         return "redirect:/";
     }
+
 }

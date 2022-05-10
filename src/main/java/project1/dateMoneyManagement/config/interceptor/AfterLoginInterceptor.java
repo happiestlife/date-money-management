@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 public class AfterLoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
 
         if(session == null || session.getAttribute(SessionKeys.LOGIN_SESSION) == null) {
             response.sendRedirect("/login");

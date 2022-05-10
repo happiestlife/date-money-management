@@ -1,5 +1,5 @@
 .calendar{
-    width: 700px;
+    width: 900px;
     border : forestgreen 3px solid;
     display : block;
 }
@@ -8,8 +8,9 @@
     float:left;
     width: calc(100% / 7);
     text-align: center;
-    border-bottom: 2px solid black;
-    border-left: 2px solid black;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
 }
 .dayText{
     font-size : 20px;
@@ -19,7 +20,7 @@
 
 .eachDay {
     width : calc(100% / 7);
-    height : 100px;
+    height : 150px;
     background-color : cornsilk;
     border-collapse: collapse;
     border-color: black;
@@ -27,5 +28,18 @@
     float:left;
     border-bottom: 1px solid black;
     border-left: 1px solid black;
+    border-right: 1px solid black;
     text-align: center;
+}
+
+.inputButton{
+    border-width: 2px;
+    border-color: black;
+    background-color: lightgoldenrodyellow;
+}
+
+.inputBox{
+    border-width: 3px;
+    border-color: black;
+    background-color: cornsilk;
 }

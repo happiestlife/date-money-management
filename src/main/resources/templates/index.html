@@ -33,41 +33,22 @@
         <div class="dayOfWeek">목</div>
         <div class="dayOfWeek">금</div>
         <div class="dayOfWeek">토</div><br>
-        <div class="eachDay" th:each="num : ${#numbers.sequence(1, calendarDTO.startDay )}">
-            -
-        </div>
+
+        <div class="eachDay" th:if="${calendarDTO.startDay} != 1" th:each="num : ${#numbers.sequence(1, calendarDTO.startDay )}">--</div>
         <div th:each="dayInfo : ${calendarDTO.expenses}">
             <div class="eachDay">
-                <div class="dayText" th:text="${dayInfo.day}"></div>
+                <div class="dayText" th:text="${dayInfo.date.day}"></div><br>
                 <th:block th:if="${dayInfo.cost} != null">
-                    <div th:text="${dayInfo.cost}"></div><br>
-                    <div th:text="${dayInfo.memo}"></div><br>
+                    <div th:text="|${dayInfo.cost}원|"></div>
+                    <div th:text="${dayInfo.memo}"></div>
                 </th:block>
+                <a class="inputButton" th:href="@{/data(year=${calendarDTO.year},month=${calendarDTO.month},day=${dayInfo.date.day})}">입력/수정</a>
             </div>
         </div>
     </div>
 
-    <div class="calendar">
-        <div class="header">
-            <div class="year-month"></div>
-            <div class="nav">
-                <button class="nav-btn go-prev" onclick="prevMonth()">&lt;</button>
-                <button class="nav-btn go-today" onclick="goToday()">Today</button>
-                <button class="nav-btn go-next" onclick="nextMonth()">&gt;</button>
-            </div>
-        </div>
-        <div class="main">
-            <div class="days">
-                <div class="day">일</div>
-                <div class="day">월</div>
-                <div class="day">화</div>
-                <div class="day">수</div>
-                <div class="day">목</div>
-                <div class="day">금</div>
-                <div class="day">토</div>
-            </div>
-            <div class="dates"></div>
-        </div>
-    </div>
+    <button th:onclick="|location.href='@{/data/insert}'|"
+            target="_blank"
+            type="button">데이터 입력</button>
 </body>
 </html>
