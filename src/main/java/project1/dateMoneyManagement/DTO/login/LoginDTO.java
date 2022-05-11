@@ -1,4 +1,4 @@
-package project1.dateMoneyManagement.controller.login;
+package project1.dateMoneyManagement.DTO.login;
 
 import lombok.*;
 

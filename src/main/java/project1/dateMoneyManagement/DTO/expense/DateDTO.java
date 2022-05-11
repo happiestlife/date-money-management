@@ -1,10 +1,12 @@
 package project1.dateMoneyManagement.DTO.expense;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class DateDTO {
-    private final int year;
-    private final int month;
-    private final int day;
+    private int year;
+    private int month;
+    private int day;
 }

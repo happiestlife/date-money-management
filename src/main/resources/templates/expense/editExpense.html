@@ -2,20 +2,30 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png"  href="favicon.png"/>
+    <link th:href="@{/css/calendar_style.css}" rel="stylesheet">
+    <link th:href="@{/css/calendar.css}" rel="stylesheet">
     <title>지출 수정</title>
 </head>
 <body>
     <h1 th:text="#{title}">데이트비 관리 프로그램</h1>
     <h3 th:text="|${detailExpense.date.year}년 ${detailExpense.date.month}월 ${detailExpense.date.day}일 비용|"></h3>
     <hr>
-    <form th:action="@{/data}" method="post" class="inputBox">
-        <label for="cost">비용 </label><input id="cost" th:name="cost" th:placeholder="|${detailExpense.cost}원|"><br><br>
-        <label for="memo">지출내용 </label><input id="memo" th:name="memo" th:placeholder="${detailExpense.memo}"><br><br>
-        <input type="hidden" th:name="year" th:value="${detailExpense.date.year}">
-        <input type="hidden" th:name="month" th:value="${detailExpense.date.month}">
-        <input type="hidden" th:name="day" th:value="${detailExpense.date.day}">
-        <input type="hidden" th:name="id" th:value="${detailExpense.id}">
+    <form th:action="@{/data}" th:object="${detailExpense}" method="post" class="inputBox">
+        <label for="cost">비용 </label>
+        <input id="cost" th:field="*{cost}" th:placeholder="|${detailExpense.cost}|" ><br><br>
+
+        <label for="memo">지출내용 </label>
+        <input id="memo" th:field="*{memo}" th:name="memo" th:placeholder="${detailExpense.memo}"><br><br>
+
+        <input type="hidden" th:field="*{date.year}" th:value="${detailExpense.date.year}">
+        <input type="hidden" th:field="*{date.month}" th:value="${detailExpense.date.month}">
+        <input type="hidden" th:field="*{date.day}" th:value="${detailExpense.date.day}">
+        <input type="hidden" th:field="*{id}" th:value="${detailExpense.id}">
         <input type="submit" value="저장하기" >
+        <button th:onclick="|location.href='@{/}'|"
+                th:text="#{return}"
+                th:type="button">돌아가기</button>
     </form>
 </body>
 </html>

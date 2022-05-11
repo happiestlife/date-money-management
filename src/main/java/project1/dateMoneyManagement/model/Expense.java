@@ -1,14 +1,15 @@
 package project1.dateMoneyManagement.model;
 
-import lombok.Data;
-import org.springframework.lang.Nullable;
+import lombok.*;
 import project1.dateMoneyManagement.DTO.expense.DateDTO;
 
-@Data
+
+@Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Expense {
-    @Nullable
-    private final String id;
-    private final DateDTO date;
-    private final Long cost;
-    private final String memo;
+    private String id;
+    private DateDTO date;
+    private Long cost;
+    private String memo;
 }

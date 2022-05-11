@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png"  href="favicon.png"/>
+    <link th:href="@{/css/calendar_style.css}" rel="stylesheet">
+    <link th:href="@{/css/calendar.css}" rel="stylesheet">
+    <script th:src="@{/js/calendar.js}" defer></script>
+    <title>메인 페이지</title>
+</head>
+<body>
+    <h1 th:text="#{title}">데이트비 관리 프로그램</h1>
+    <div th:text="#{homepage.greeting(${nickname})}"></div>
+</body>
+</html>

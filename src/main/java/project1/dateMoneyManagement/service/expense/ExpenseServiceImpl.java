@@ -39,7 +39,10 @@ public class ExpenseServiceImpl implements ExpenseService{
     public Expense getDetailExpense(DateDTO date, String id) {
         Expense expense = expenseRepository.readDetailExpense(date, id);
 
-        return expense;
+        if(expense == null)
+            return new Expense(id, date, null, null);
+        else
+            return expense;
     }
 
     @Override

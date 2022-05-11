@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import project1.dateMoneyManagement.DTO.login.LoginDTO;
 import project1.dateMoneyManagement.model.Member;
 import project1.dateMoneyManagement.exception.login.WrongIdOrPasswordException;
 import project1.dateMoneyManagement.service.login.LoginService;
