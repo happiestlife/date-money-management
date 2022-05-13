@@ -24,6 +24,13 @@
     </form>
 
     <h3 th:text="${calendarDTO.year}"></h3>
+    <select name="year" th:each="year : ${years}">
+        <option th:value="year" >직업선택</option>
+        <option value="학생">학생</option>
+        <option value="회사원">회사원</option>
+        <option value="기타">기타</option>
+    </select>
+
     <h1 th:text="${calendarDTO.month}"></h1>
     <div class="calendar">
         <div class="dayOfWeek">일</div>
@@ -34,7 +41,7 @@
         <div class="dayOfWeek">금</div>
         <div class="dayOfWeek">토</div><br>
 
-        <div class="eachDay" th:if="${calendarDTO.startDay} != 1" th:each="num : ${#numbers.sequence(1, calendarDTO.startDay )}">--</div>
+        <div class="eachDay" th:if="${calendarDTO.startDay} != 1" th:each="num : ${#numbers.sequence(1, calendarDTO.startDay )}"> </div>
         <div th:each="dayInfo : ${calendarDTO.expenses}">
             <div class="eachDay">
                 <div class="dayText" th:text="${dayInfo.date.day}"></div><br>

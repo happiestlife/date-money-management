@@ -1,4 +1,4 @@
-package project1.dateMoneyManagement.service.login;
+package project1.dateMoneyManagement.DTO.login;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -27,7 +27,6 @@ public class ExpenseServiceImpl implements ExpenseService{
 
         today.set(Calendar.DAY_OF_MONTH, 1);
         int dayOfWeek = today.get(Calendar.DAY_OF_WEEK);
-        System.out.println(dayOfWeek);
 
         return new CalendarDTO(today.get(Calendar.YEAR),
                 today.get(Calendar.MONTH) + 1,
@@ -56,12 +55,15 @@ public class ExpenseServiceImpl implements ExpenseService{
     }
 
     private List<Expense> createCalendar(List<Expense> list, Calendar today){
-        int year = list.get(0).getDate().getYear();
-        int month = list.get(0).getDate().getMonth();
+        int year = today.get(Calendar.YEAR);
+        int month = today.get(Calendar.MONTH)+1;
         List<Expense> result = new ArrayList<>();
 
         for(int i = 1; i <= today.getActualMaximum(Calendar.DAY_OF_MONTH); i++)
             result.add(new Expense(null, new DateDTO(year, month, i), null, null));
+
+        if(list == null)
+            return result;
 
         for (Expense expense : list) {
             result.set(expense.getDate().getDay()-1, expense);

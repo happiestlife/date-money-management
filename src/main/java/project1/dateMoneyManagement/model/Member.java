@@ -20,11 +20,11 @@ public class Member {
     private String id;
 
     @Size(min = 8, max = 30)
-    @Pattern(regexp = "^.*(?=^.{8,30}$)(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$")
+//    @Pattern(regexp = "^.*(?=^.{8,30}$)(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$")
     private String password;
 
     @Size(min = 4, max = 30)
-    @Pattern(regexp="^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$")
+//    @Pattern(regexp="^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$")
     private String email;
 
     @Size(min = 1, max = 15)
@@ -51,6 +51,7 @@ public class Member {
         this.boyName = boyName;
         this.girlName = girlName;
         this.regDate = setDateConverter();
+        this.image = null;
     }
 
     public Member(String id, String password, String email, String nickname, String boyName, String girlName, Files image) {

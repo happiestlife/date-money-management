@@ -5,14 +5,13 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import project1.dateMoneyManagement.DTO.expense.DateDTO;
 import project1.dateMoneyManagement.model.Expense;
-import project1.dateMoneyManagement.model.Member;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public class MySqlExpenseRepository implements ExpenseRepository{
+public class MySQLExpenseRepository implements ExpenseRepository{
 
     private JdbcTemplate jdbcTemplate;
     private final String table = "expense";
@@ -33,16 +32,29 @@ public class MySqlExpenseRepository implements ExpenseRepository{
         }
     }
 
-    public MySqlExpenseRepository(JdbcTemplate jdbcTemplate) {
+    public MySQLExpenseRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         this.rowMapper = new ExpenseRowMapper();
     }
 
     @Override
+    public boolean createExpense(Expense expense) {
+        DateDTO date = expense.getDate();
+
+        String query = "INSERT INTO %s VALUES ('%s', %d, %d, %d, %d, '%s')";
+        query = String.format(query, table, expense.getId(), date.getYear(), date.getMonth(), date.getDay(), expense.getCost(), expense.getMemo());
+
+        int rs = jdbcTemplate.update(query);
+
+        if(rs == 1) return true;
+        else return false;
+    }
+
+
+    @Override
     public List<Expense> readMonthExpense(int year, int month, String id) {
         String query = "SELECT * FROM %s WHERE id = '%s' AND year = %s AND month = %s";
         query = String.format(query, table, id, year, month);
-
 
         return jdbcTemplate.query(query, rowMapper);
     }
@@ -59,19 +71,6 @@ public class MySqlExpenseRepository implements ExpenseRepository{
     }
 
     @Override
-    public boolean createExpense(Expense expense) {
-        DateDTO date = expense.getDate();
-
-        String query = "INSERT INTO %s VALUES ('%s', %d, %d, %d, %d, '%s')";
-        query = String.format(query, table, expense.getId(), date.getYear(), date.getMonth(), date.getDay(), expense.getCost(), expense.getMemo());
-
-        int rs = jdbcTemplate.update(query);
-
-        if(rs == 1) return true;
-        else return false;
-    }
-
-    @Override
     public boolean updateExpense(Expense expense) {
         DateDTO date = expense.getDate();
 
@@ -82,5 +81,21 @@ public class MySqlExpenseRepository implements ExpenseRepository{
 
         if(rs == 1) return true;
         else return false;
+    }
+
+    @Override
+    public int deleteExpense(int year, int month, String id) {
+        String query = "DELETE FROM %s WHERE id = '%s' AND year = %s AND month = %s";
+        query = String.format(query, table, id, year, month);
+
+        return jdbcTemplate.update(query);
+    }
+
+    @Override
+    public int deleteExpense(DateDTO date, String id) {
+        String query = "DELETE FROM %s WHERE id = '%s' AND year = %s AND month = %s AND day = %s";
+        query = String.format(query, table, id, date.getYear(), date.getMonth(), date.getDay());
+
+        return jdbcTemplate.update(query);
     }
 }

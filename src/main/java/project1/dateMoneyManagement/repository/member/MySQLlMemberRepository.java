@@ -1,5 +1,6 @@
 package project1.dateMoneyManagement.repository.member;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,7 +18,8 @@ import java.util.List;
 
 @Transactional
 @Repository
-public class MySqlMemberRepository implements MemberRepository {
+@Slf4j
+public class MySQLlMemberRepository implements MemberRepository {
 
     private JdbcTemplate jdbcTemplate;
     private final String table = "member";
@@ -37,7 +39,7 @@ public class MySqlMemberRepository implements MemberRepository {
         }
     }
 
-    public MySqlMemberRepository(JdbcTemplate jdbcTemplate) {
+    public MySQLlMemberRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -60,6 +62,7 @@ public class MySqlMemberRepository implements MemberRepository {
 
             return true;
         } catch (DuplicateKeyException e) {
+            log.info(e.getMessage());
             return false;
         }
     }

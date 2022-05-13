@@ -1,4 +1,6 @@
-package project1.dateMoneyManagement.service.login;
+package project1.dateMoneyManagement.service.login.mail;
+
+import project1.dateMoneyManagement.DTO.login.AuthMailDTO;
 
 public interface AuthMailService {
     public static final String SERVER_ADDRESS = "datemoneymanagement@gmail.com";

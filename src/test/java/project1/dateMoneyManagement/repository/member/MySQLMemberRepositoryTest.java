@@ -2,17 +2,17 @@ package project1.dateMoneyManagement.repository.member;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.junit.jupiter.api.*;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import project1.dateMoneyManagement.model.Member;
+import project1.dateMoneyManagement.repository.CommonRepositoryTest;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class MySqlMemberRepositoryTest {
+class MySQLMemberRepositoryTest {
 
-    private static MySqlMemberRepository repository;
+    private static MySQLlMemberRepository repository;
     private Member member1 = new Member("test1", "test1", "test1@naver.com",
             "test1",  "test1", "test1");
     private Member member2 = new Member("test2", "test2", "test2@naver.com",
@@ -20,13 +20,9 @@ class MySqlMemberRepositoryTest {
 
     @BeforeAll
     static public void init() {
-        DataSource ds = new DataSource();
-        ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        ds.setUrl("jdbc:mysql://localhost:3306/dmmdb");
-        ds.setUsername("root");
-        ds.setPassword("@dlgustjd1234");
+        DataSource ds = CommonRepositoryTest.getDatasource();
 
-        repository = new MySqlMemberRepository(new JdbcTemplate(ds));
+        repository = new MySQLlMemberRepository(new JdbcTemplate(ds));
     }
 
 //    @AfterAll

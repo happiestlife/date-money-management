@@ -3,6 +3,7 @@ package project1.dateMoneyManagement.repository.member;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import project1.dateMoneyManagement.model.Member;
+import project1.dateMoneyManagement.repository.member.MemoryMemberRepository;
 
 import java.util.List;
 

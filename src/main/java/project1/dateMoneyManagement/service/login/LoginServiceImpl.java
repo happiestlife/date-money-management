@@ -5,10 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import project1.dateMoneyManagement.DTO.login.AuthMailDTO;
 import project1.dateMoneyManagement.model.Member;
 import project1.dateMoneyManagement.exception.login.*;
 import project1.dateMoneyManagement.DTO.login.FindLoginInfoDTO;
 import project1.dateMoneyManagement.repository.member.MemberRepository;
+import project1.dateMoneyManagement.service.login.mail.AuthCode;
+import project1.dateMoneyManagement.service.login.mail.AuthMailService;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

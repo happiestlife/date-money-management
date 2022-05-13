@@ -1,8 +1,9 @@
-package project1.dateMoneyManagement.service.login;
+package project1.dateMoneyManagement.service.login.mail;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
+import project1.dateMoneyManagement.DTO.login.AuthMailDTO;
 
 import java.util.Properties;
 import java.util.Random;

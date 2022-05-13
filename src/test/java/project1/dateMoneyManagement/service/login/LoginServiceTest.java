@@ -3,11 +3,12 @@ package project1.dateMoneyManagement.service.login;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.dao.DuplicateKeyException;
+import project1.dateMoneyManagement.DTO.login.AuthMailDTO;
 import project1.dateMoneyManagement.model.Member;
 import project1.dateMoneyManagement.exception.login.*;
 import project1.dateMoneyManagement.repository.member.MemoryMemberRepository;
+import project1.dateMoneyManagement.service.login.mail.AuthMailService;
 
 import java.util.NoSuchElementException;
 import java.util.Random;
@@ -21,7 +22,7 @@ public class LoginServiceTest {
     private Member member = new Member("test", "1234", "test@naver.com",
                                 "test", "test", "test");
 
-    private class AuthMailServiceTest implements AuthMailService{
+    private class AuthMailServiceTest implements AuthMailService {
 
         public String sendMail(AuthMailDTO authMailDTO, String id) {
             return makeAuthCode();
