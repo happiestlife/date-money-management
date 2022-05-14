@@ -31,16 +31,17 @@ public class BaseController {
     @GetMapping
     public String homepageForm(HttpSession session,
                             Model model) {
-            log.trace("goto Homepage");
+        log.trace("goto Homepage");
 
-            String id = (String) session.getAttribute(SessionKeys.LOGIN_SESSION);
-            Member findMember = memberService.findMemberById(id);
-            CalendarDTO calendarDTO = expenseService.getThisMonthExpense(id);
+        String id = (String) session.getAttribute(SessionKeys.LOGIN_SESSION);
+        Member findMember = memberService.findMemberById(id);
+        CalendarDTO calendarDTO = expenseService.getThisMonthExpense(id);
 
-            model.addAttribute("nickname", findMember.getNickname());
-            model.addAttribute("calendarDTO", calendarDTO);
+        model.addAttribute("id", id);
+        model.addAttribute("nickname", findMember.getNickname());
+        model.addAttribute("calendarDTO", calendarDTO);
 
-            return "index";
+        return "index";
     }
 
     @PostMapping

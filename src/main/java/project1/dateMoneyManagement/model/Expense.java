@@ -4,6 +4,7 @@ import lombok.*;
 import project1.dateMoneyManagement.DTO.expense.DateDTO;
 
 
+@ToString
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor

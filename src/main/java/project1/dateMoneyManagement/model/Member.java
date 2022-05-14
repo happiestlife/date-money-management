@@ -1,5 +1,6 @@
 package project1.dateMoneyManagement.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,6 +15,7 @@ import java.util.Date;
 
 @Setter @Getter
 @ToString
+@AllArgsConstructor
 public class Member {
 
     @Size(min = 1, max = 30)
@@ -62,17 +64,6 @@ public class Member {
         this.boyName = boyName;
         this.girlName = girlName;
         this.regDate = setDateConverter();
-        this.image = image;
-    }
-
-    public Member(String id, String password, String email, String nickname, String boyName, String girlName, String regDate, Files image) {
-        this.id = id;
-        this.password = password;
-        this.email = email;
-        this.nickname = nickname;
-        this.boyName = boyName;
-        this.girlName = girlName;
-        this.regDate = regDate;
         this.image = image;
     }
 

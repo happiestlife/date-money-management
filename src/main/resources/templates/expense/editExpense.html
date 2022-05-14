@@ -11,7 +11,7 @@
     <h1 th:text="#{title}">데이트비 관리 프로그램</h1>
     <h3 th:text="|${detailExpense.date.year}년 ${detailExpense.date.month}월 ${detailExpense.date.day}일 비용|"></h3>
     <hr>
-    <form th:action="@{/data}" th:object="${detailExpense}" method="post" class="inputBox">
+    <form th:action="@{/data/insert}" th:object="${detailExpense}" method="post" class="inputBox">
         <label for="cost">비용 </label>
         <input id="cost" th:field="*{cost}" th:placeholder="|${detailExpense.cost}|" ><br><br>
 

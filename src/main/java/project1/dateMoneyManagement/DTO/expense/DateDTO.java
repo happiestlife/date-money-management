@@ -2,6 +2,7 @@ package project1.dateMoneyManagement.DTO.expense;
 
 import lombok.*;
 
+@ToString
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor

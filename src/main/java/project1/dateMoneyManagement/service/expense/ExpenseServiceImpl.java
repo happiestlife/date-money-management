@@ -54,6 +54,21 @@ public class ExpenseServiceImpl implements ExpenseService{
         return true;
     }
 
+    @Override
+    public boolean deleteMonth(int year, int month, String id) {
+        expenseRepository.deleteExpense(year, month, id);
+
+        return true;
+    }
+
+    @Override
+    public boolean deleteDay(DateDTO date, String id) {
+        int deletedData = expenseRepository.deleteExpense(date, id);
+
+        if(deletedData == 1) return true;
+        else return false;
+    }
+
     private List<Expense> createCalendar(List<Expense> list, Calendar today){
         int year = today.get(Calendar.YEAR);
         int month = today.get(Calendar.MONTH)+1;

@@ -49,7 +49,8 @@
                     <div th:text="|${dayInfo.cost}원|"></div>
                     <div th:text="${dayInfo.memo}"></div>
                 </th:block>
-                <a class="inputButton" th:href="@{/data(year=${calendarDTO.year},month=${calendarDTO.month},day=${dayInfo.date.day})}">입력/수정</a>
+                <a class="inputButton" th:href="@{/data(year=${calendarDTO.year},month=${calendarDTO.month},day=${dayInfo.date.day})}"><button>입력/수정</button></a><br>
+                <a class="inputButton" th:href="@{/data/delete(id=${id},year=${calendarDTO.year},month=${calendarDTO.month},day=${dayInfo.date.day})}"><button>삭제하기</button></a>
             </div>
         </div>
     </div>
